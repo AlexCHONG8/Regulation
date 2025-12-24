@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Summed Medtech Regulatory Standards Tracking Matrix - Auto-Injector & Pen-Injector Compliance">
+    <meta name="author" content="Summed Medtech">
+    <title>Summed Medtech Regulatory Tracker | 森迈医疗科技 - 法规标准跟踪系统</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="lang-en">
+
+    <!-- ============================================
+         HEADER
+         ============================================ -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div>
+                    <h1>
+                        <span class="text-en">Summed Medtech</span>
+                        <span class="text-cn">森迈医疗科技</span>
+                    </h1>
+                    <p>
+                        <span class="text-en">Regulatory Standards Tracking Matrix</span>
+                        <span class="text-cn">法规标准跟踪矩阵</span>
+                    </p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <!-- Language Toggle -->
+                <div class="lang-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="cn">中文</button>
+                </div>
+                <!-- Search Box -->
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search standards... / 搜索标准..." aria-label="Search standards">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================
+         MAIN CONTAINER
+         ============================================ -->
+    <main class="container">
+
+        <!-- Legend -->
+        <div class="legend" role="region" aria-label="Status legend">
+            <div class="legend-item">
+                <span class="legend-icon status-current">✅</span>
+                <span class="text-en">CURRENT</span>
+                <span class="text-cn">最新版本</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon status-check">⚠️</span>
+                <span class="text-en">CHECK UPDATE</span>
+                <span class="text-cn">需检查更新</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon status-obsolete">❌</span>
+                <span class="text-en">OBSOLETE</span>
+                <span class="text-cn">已废止</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon status-draft">📋</span>
+                <span class="text-en">DRAFT</span>
+                <span class="text-cn">草案</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon status-critical">🔧</span>
+                <span class="text-en">PRODUCT-SPECIFIC</span>
+                <span class="text-cn">产品特定</span>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <nav class="tabs" role="tablist">
+            <button class="tab-btn active" data-tab="dashboard" role="tab" aria-selected="true">
+                <span class="text-en">📊 Dashboard</span>
+                <span class="text-cn">📊 概览</span>
+            </button>
+            <button class="tab-btn" data-tab="product" role="tab" aria-selected="false">
+                <span class="text-en">🔧 Product-Specific</span>
+                <span class="text-cn">🔧 产品特定标准</span>
+            </button>
+            <button class="tab-btn" data-tab="iso" role="tab" aria-selected="false">
+                <span class="text-en">ISO Standards</span>
+                <span class="text-cn">ISO 标准</span>
+            </button>
+            <button class="tab-btn" data-tab="fda" role="tab" aria-selected="false">
+                <span class="text-en">FDA Regulations</span>
+                <span class="text-cn">FDA 法规</span>
+            </button>
+            <button class="tab-btn" data-tab="nmpa-laws" role="tab" aria-selected="false">
+                <span class="text-en">NMPA Laws</span>
+                <span class="text-cn">NMPA 法律</span>
+            </button>
+            <button class="tab-btn" data-tab="nmpa-gb" role="tab" aria-selected="false">
+                <span class="text-en">GB Standards</span>
+                <span class="text-cn">GB 标准</span>
+            </button>
+            <button class="tab-btn" data-tab="nmpa-yy" role="tab" aria-selected="false">
+                <span class="text-en">YY Standards</span>
+                <span class="text-cn">YY 标准</span>
+            </button>
+            <button class="tab-btn" data-tab="eu" role="tab" aria-selected="false">
+                <span class="text-en">EU Regulations</span>
+                <span class="text-cn">欧盟法规</span>
+            </button>
+            <button class="tab-btn" data-tab="iec" role="tab" aria-selected="false">
+                <span class="text-en">IEC Standards</span>
+                <span class="text-cn">IEC 标准</span>
+            </button>
+            <button class="tab-btn" data-tab="astm" role="tab" aria-selected="false">
+                <span class="text-en">ASTM Standards</span>
+                <span class="text-cn">ASTM 标准</span>
+            </button>
+            <button class="tab-btn" data-tab="cross-ref" role="tab" aria-selected="false">
+                <span class="text-en">🔗 Cross-Reference</span>
+                <span class="text-cn">🔗 对照表</span>
+            </button>
+            <button class="tab-btn" data-tab="priority" role="tab" aria-selected="false">
+                <span class="text-en">🚨 Priority Updates</span>
+                <span class="text-cn">🚨 优先更新</span>
+            </button>
+        </nav>
+
+        <!-- ============================================
+             DASHBOARD TAB
+             ============================================ -->
+        <div class="tab-content active" id="dashboard" role="tabpanel">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">Regulatory Compliance Overview</span>
+                    <span class="text-cn">法规合规概览</span>
+                </h2>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-number">400+</div>
+                    <div class="card-label">
+                        <span class="text-en">Total Standards</span>
+                        <span class="text-cn">标准总数</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-number">30+</div>
+                    <div class="card-label">
+                        <span class="text-en">ISO Standards</span>
+                        <span class="text-cn">ISO 标准</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-number">100+</div>
+                    <div class="card-label">
+                        <span class="text-en">NMPA Regulations</span>
+                        <span class="text-cn">NMPA 法规</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-number">⭐</div>
+                    <div class="card-label">
+                        <span class="text-en">Auto-Injector Focus</span>
+                        <span class="text-cn">自动注射器重点</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Critical Alert -->
+            <div class="critical-alert" role="alert">
+                <h3>
+                    <span class="text-en">⭐ CRITICAL FOR AUTO-INJECTOR & PEN-INJECTOR</span>
+                    <span class="text-cn">⭐ 自动注射器与笔式注射器关键标准</span>
+                </h3>
+                <p>
+                    <span class="text-en">ISO 11608 series (2022) is the foundation standard for needle-based injection systems. All parts updated to 2022 version.</span>
+                    <span class="text-cn">ISO 11608 系列(2022)是基于针头的注射系统的基础标准。所有部分已更新至2022版本。</span>
+                </p>
+            </div>
+
+            <!-- Quick Reference -->
+            <div class="expandable open">
+                <div class="expandable-header" role="button" tabindex="0" aria-expanded="true">
+                    <h3>
+                        <span class="text-en">📋 Quick Reference - Product-Specific Standards</span>
+                        <span class="text-cn">📋 快速参考 - 产品特定标准</span>
+                    </h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th><span class="text-en">Standard</span><span class="text-cn">标准号</span></th>
+                                    <th><span class="text-en">Title</span><span class="text-cn">标题</span></th>
+                                    <th><span class="text-en">Version</span><span class="text-cn">版本</span></th>
+                                    <th><span class="text-en">Status</span><span class="text-cn">状态</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISO 11608-1</td>
+                                    <td><span class="text-en">Needle-based injection systems - Part 1: General requirements</span><span class="text-cn">基于针头的注射系统 - 第1部分：通用要求</span></td>
+                                    <td>2022</td>
+                                    <td><span class="status-current">✅</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ISO 11608-5</td>
+                                    <td><span class="text-en">Automated functions</span><span class="text-cn">自动化功能</span></td>
+                                    <td>2022</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ISO 23908</td>
+                                    <td><span class="text-en">Sharps injury protection</span><span class="text-cn">锐器伤害防护</span></td>
+                                    <td>2024</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                </tr>
+                                <tr>
+                                    <td>IEC 62366-1</td>
+                                    <td><span class="text-en">Usability engineering</span><span class="text-cn">可用性工程</span></td>
+                                    <td>2020</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                </tr>
+                                <tr>
+                                    <td>IEC 62304</td>
+                                    <td><span class="text-en">Software life cycle processes</span><span class="text-cn">软件生命周期过程</span></td>
+                                    <td>2006</td>
+                                    <td><span class="status-current">✅</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jurisdiction Coverage -->
+            <div class="section-header">
+                <h3>
+                    <span class="text-en">🌍 Jurisdiction Coverage</span>
+                    <span class="text-cn">🌍 管辖范围覆盖</span>
+                </h3>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>
+                        <span class="text-en">China (NMPA)</span>
+                        <span class="text-cn">中国 (NMPA)</span>
+                    </h3>
+                    <p>
+                        <span class="text-en">Primary market for Summed Medtech. Covers GB standards, YY standards, NMPA regulations.</span>
+                        <span class="text-cn">森迈医疗科技的主要市场。涵盖GB标准、YY标准、NMPA法规。</span>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>
+                        <span class="text-en">USA (FDA)</span>
+                        <span class="text-cn">美国 (FDA)</span>
+                    </h3>
+                    <p>
+                        <span class="text-en">Key export market. CFR regulations, guidance documents for combination products.</span>
+                        <span class="text-cn">主要出口市场。CFR法规、组合产品指导文件。</span>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>
+                        <span class="text-en">European Union (MDR)</span>
+                        <span class="text-cn">欧盟 (MDR)</span>
+                    </h3>
+                    <p>
+                        <span class="text-en">EU 2017/745 MDR, harmonized standards for medical devices.</span>
+                        <span class="text-cn">EU 2017/745 MDR、医疗器械协调标准。</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             PRODUCT-SPECIFIC TAB
+             ============================================ -->
+        <div class="tab-content" id="product" role="tabpanel">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">🔧 Product-Specific Standards - Auto-Injector & Pen-Injector</span>
+                    <span class="text-cn">🔧 产品特定标准 - 自动注射器与笔式注射器</span>
+                </h2>
+            </div>
+
+            <p style="margin-bottom: 1.5rem;">
+                <span class="text-en">These standards are specifically critical for Summed Medtech's auto-injector and pen-injector products.</span>
+                <span class="text-cn">这些标准对森迈医疗科技的自动注射器和笔式注射器产品尤为重要。</span>
+            </p>
+
+            <!-- Tables will be dynamically generated by JavaScript -->
+        </div>
+
+        <!-- ============================================
+             PLACEHOLDER TABS - Content populated by JavaScript
+             ============================================ -->
+        <div class="tab-content" id="iso" role="tabpanel">
+            <div class="section-header">
+                <h2><span class="text-en">ISO Standards</span><span class="text-cn">ISO 标准</span></h2>
+            </div>
+        </div>
+
+        <div class="tab-content" id="fda" role="tabpanel">
+            <div class="section-header">
+                <h2><span class="text-en">FDA Regulations & Guidance</span><span class="text-cn">FDA 法规与指导文件</span></h2>
+            </div>
+        </div>
+
+        <div class="tab-content" id="nmpa-laws" role="tabpanel">
+            <div class="section-header">
+                <h2><span class="text-en">NMPA Laws and Regulations</span><span class="text-cn">NMPA 法律法规</span></h2>
+            </div>
+        </div>
+
+        <div class="tab-content" id="nmpa-gb" role="tabpanel">
+            <div class="section-header">
+                <h2><span class="text-en">GB Standards (National Standards)</span><span class="text-cn">GB 标准 (国家标准)</span></h2>
+            </div>
+        </div>
+
+        <div class="tab-content" id="nmpa-yy" role="tabpanel">
+            <div class="section-header">
+                <h2><span class="text-en">YY Standards (Medical Device Industry Standards)</span><span class="text-cn">YY 标准 (医疗器械行业标准)</span></h2>
+            </div>
+        </div>
+
+        <div class="tab-content" id="eu" role="tabpanel">
+            <div class="section-header">
+                <h2><span class="text-en">EU/EMA Regulations</span><span class="text-cn">欧盟/EMA 法规</span></h2>
+            </div>
+        </div>
+
+        <div class="tab-content" id="iec" role="tabpanel">
+            <div class="section-header">
+                <h2><span class="text-en">IEC Standards</span><span class="text-cn">IEC 标准</span></h2>
+            </div>
+        </div>
+
+        <div class="tab-content" id="astm" role="tabpanel">
+            <div class="section-header">
+                <h2><span class="text-en">ASTM Standards</span><span class="text-cn">ASTM 标准</span></h2>
+            </div>
+        </div>
+
+        <div class="tab-content" id="cross-ref" role="tabpanel">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">Cross-Reference Table (Equivalent Standards Across Jurisdictions)</span>
+                    <span class="text-cn">对照表 (各管辖区等同标准)</span>
+                </h2>
+            </div>
+            <p style="margin-bottom: 1.5rem;">
+                <span class="text-en">This table shows equivalent standards across different jurisdictions for easy reference.</span>
+                <span class="text-cn">此表显示不同管辖区的等同标准,便于参考。</span>
+            </p>
+            <div class="table-wrapper">
+                <table id="crossRefTable">
+                    <thead>
+                        <tr>
+                            <th><span class="text-en">Topic</span><span class="text-cn">主题</span></th>
+                            <th><span class="text-en">NMPA/China</span><span class="text-cn">NMPA/中国</span></th>
+                            <th>FDA</th>
+                            <th><span class="text-en">EU/MDR</span><span class="text-cn">欧盟</span></th>
+                            <th>ISO/IEC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populated by JavaScript from standards-data.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-content" id="priority" role="tabpanel">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">🚨 Priority Update Actions</span>
+                    <span class="text-cn">🚨 优先更新行动</span>
+                </h2>
+            </div>
+            <div id="priorityContainer">
+                <!-- Populated by JavaScript from standards-data.js -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <p>
+            <span class="text-en">Summed Medtech Regulatory Standards Tracking Matrix</span>
+            <span class="text-cn">森迈医疗科技法规标准跟踪矩阵</span>
+        </p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+            <span class="text-en">Generated: 2025-12-24 | Auto-Injector & Pen-Injector Focus</span>
+            <span class="text-cn">生成日期: 2025-12-24 | 自动注射器与笔式注射器重点</span>
+        </p>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.7;">
+            <span class="text-en">Repository: /Volumes/森迈医疗科技/05法规注册部/01内部公开/01 法律法规/</span>
+            <span class="text-cn">存储位置: /Volumes/森迈医疗科技/05法规注册部/01内部公开/01 法律法规/</span>
+        </p>
+    </footer>
+
+    <!-- Load Data First -->
+    <script src="js/standards-data.js"></script>
+
+    <!-- Load Main Script -->
+    <script src="js/main.js"></script>
+
+</body>
+</html>

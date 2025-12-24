@@ -1,0 +1,2766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summed Medtech - Regulatory Standards Tracker | 森迈医疗科技 - 法规标准跟踪系统</title>
+    <style>
+        :root {
+            --primary-dark: #1a3a5c;
+            --primary: #2c5282;
+            --primary-light: #3182ce;
+            --accent: #63b3ed;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
+            --info: #4299e1;
+            --light: #f7fafc;
+            --dark: #1a202c;
+            --gray: #718096;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .logo p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            display: flex;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 3px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 17px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: var(--primary);
+        }
+
+        .lang-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .lang-btn.active:hover {
+            background: white;
+        }
+
+        /* Search Box */
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+            min-width: 200px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.95rem;
+        }
+
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--gray);
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            background: rgba(44, 82, 130, 0.1);
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            background: white;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            background: white;
+            border-radius: 0 12px 12px 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .legend-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* Status Badges */
+        .status-current { background: #c6f6d5; color: #22543d; }
+        .status-check { background: #feebc8; color: #7c2d12; }
+        .status-obsolete { background: #fed7d7; color: #742a2a; }
+        .status-draft { background: #bee3f8; color: #2a4365; }
+        .status-critical { background: #fbd38d; color: #744210; }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--primary-dark);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            white-space: nowrap;
+        }
+
+        tr:hover {
+            background: var(--light);
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        tr:nth-child(even):hover {
+            background: var(--light);
+        }
+
+        /* Links */
+        a {
+            color: var(--primary-light);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-header h2 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+        }
+
+        /* Critical Alert */
+        .critical-alert {
+            background: linear-gradient(135deg, #fed7d7 0%, #fc8181 100%);
+            border-left: 4px solid var(--danger);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .critical-alert h3 {
+            color: #742a2a;
+            margin-bottom: 0.5rem;
+        }
+
+        .critical-alert p {
+            color: #742a2a;
+        }
+
+        /* Priority List */
+        .priority-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: white;
+            border-left: 4px solid;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .priority-high {
+            border-color: var(--danger);
+            background: #fff5f5;
+        }
+
+        .priority-medium {
+            border-color: var(--warning);
+            background: #fffaf0;
+        }
+
+        /* Filter Buttons */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: var(--light);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-light);
+        }
+
+        .card-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Expandable Sections */
+        .expandable {
+            margin: 1rem 0;
+        }
+
+        .expandable-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 8px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .expandable-header:hover {
+            background: #edf2f7;
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .expandable.open .expandable-content {
+            max-height: 5000px;
+        }
+
+        .expandable-icon {
+            transition: transform 0.3s;
+        }
+
+        .expandable.open .expandable-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            opacity: 0.9;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+
+            .logo p {
+                font-size: 0.8rem;
+            }
+
+            .header-controls {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .search-box {
+                width: 100%;
+                max-width: none;
+            }
+
+            .tabs {
+                gap: 0.25rem;
+            }
+
+            .tab-btn {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            .tab-content {
+                padding: 1rem;
+            }
+
+            .legend {
+                gap: 0.5rem;
+            }
+
+            .legend-item {
+                font-size: 0.8rem;
+            }
+
+            table {
+                font-size: 0.8rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tab-btn {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .highlight {
+            background: yellow;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+        .text-cn {
+            display: none;
+        }
+
+        body.lang-cn .text-en {
+            display: none;
+        }
+
+        body.lang-cn .text-cn {
+            display: inline;
+        }
+
+        /* Print Styles */
+        @media print {
+            .header, .tabs, .filter-bar, .footer {
+                display: none;
+            }
+
+            .tab-content {
+                display: block !important;
+            }
+
+            table {
+                page-break-inside: auto;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="lang-en">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div>
+                    <h1>
+                        <span class="text-en">Summed Medtech</span>
+                        <span class="text-cn">森迈医疗科技</span>
+                    </h1>
+                    <p>
+                        <span class="text-en">Regulatory Standards Tracking Matrix</span>
+                        <span class="text-cn">法规标准跟踪矩阵</span>
+                    </p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div class="lang-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="cn">中文</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search standards... / 搜索标准...">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-icon status-current">✅</span>
+                <span class="text-en">CURRENT</span>
+                <span class="text-cn">最新版本</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon status-check">⚠️</span>
+                <span class="text-en">CHECK UPDATE</span>
+                <span class="text-cn">需检查更新</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon status-obsolete">❌</span>
+                <span class="text-en">OBSOLETE</span>
+                <span class="text-cn">已废止</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon status-draft">📋</span>
+                <span class="text-en">DRAFT</span>
+                <span class="text-cn">草案</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon status-critical">🔧</span>
+                <span class="text-en">PRODUCT-SPECIFIC</span>
+                <span class="text-cn">产品特定</span>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="dashboard">
+                <span class="text-en">📊 Dashboard</span>
+                <span class="text-cn">📊 概览</span>
+            </button>
+            <button class="tab-btn" data-tab="product">
+                <span class="text-en">🔧 Product-Specific</span>
+                <span class="text-cn">🔧 产品特定标准</span>
+            </button>
+            <button class="tab-btn" data-tab="iso">
+                <span class="text-en">ISO Standards</span>
+                <span class="text-cn">ISO 标准</span>
+            </button>
+            <button class="tab-btn" data-tab="fda">
+                <span class="text-en">FDA Regulations</span>
+                <span class="text-cn">FDA 法规</span>
+            </button>
+            <button class="tab-btn" data-tab="nmpa">
+                <span class="text-en">NMPA Standards</span>
+                <span class="text-cn">NMPA 标准</span>
+            </button>
+            <button class="tab-btn" data-tab="eu">
+                <span class="text-en">EU Regulations</span>
+                <span class="text-cn">欧盟法规</span>
+            </button>
+            <button class="tab-btn" data-tab="iec">
+                <span class="text-en">IEC Standards</span>
+                <span class="text-cn">IEC 标准</span>
+            </button>
+            <button class="tab-btn" data-tab="astm">
+                <span class="text-en">ASTM Standards</span>
+                <span class="text-cn">ASTM 标准</span>
+            </button>
+            <button class="tab-btn" data-tab="cross-ref">
+                <span class="text-en">🔗 Cross-Reference</span>
+                <span class="text-cn">🔗 对照表</span>
+            </button>
+            <button class="tab-btn" data-tab="priority">
+                <span class="text-en">🚨 Priority Updates</span>
+                <span class="text-cn">🚨 优先更新</span>
+            </button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="dashboard">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">Regulatory Compliance Overview</span>
+                    <span class="text-cn">法规合规概览</span>
+                </h2>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-number">400+</div>
+                    <div class="card-label">
+                        <span class="text-en">Total Standards</span>
+                        <span class="text-cn">标准总数</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-number">30+</div>
+                    <div class="card-label">
+                        <span class="text-en">ISO Standards</span>
+                        <span class="text-cn">ISO 标准</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-number">100+</div>
+                    <div class="card-label">
+                        <span class="text-en">NMPA Regulations</span>
+                        <span class="text-cn">NMPA 法规</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-number">⭐</div>
+                    <div class="card-label">
+                        <span class="text-en">Auto-Injector Focus</span>
+                        <span class="text-cn">自动注射器重点</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Critical Alert -->
+            <div class="critical-alert">
+                <h3>
+                    <span class="text-en">⭐ CRITICAL FOR AUTO-INJECTOR & PEN-INJECTOR</span>
+                    <span class="text-cn">⭐ 自动注射器与笔式注射器关键标准</span>
+                </h3>
+                <p>
+                    <span class="text-en">ISO 11608 series (2022) is the foundation standard for needle-based injection systems. All parts updated to 2022 version.</span>
+                    <span class="text-cn">ISO 11608 系列(2022)是基于针头的注射系统的基础标准。所有部分已更新至2022版本。</span>
+                </p>
+            </div>
+
+            <!-- Quick Reference -->
+            <div class="expandable open">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <h3>
+                        <span class="text-en">📋 Quick Reference - Product-Specific Standards</span>
+                        <span class="text-cn">📋 快速参考 - 产品特定标准</span>
+                    </h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="text-en">Standard</span>
+                                        <span class="text-cn">标准号</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Title</span>
+                                        <span class="text-cn">标题</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Version</span>
+                                        <span class="text-cn">版本</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Status</span>
+                                        <span class="text-cn">状态</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISO 11608-1</td>
+                                    <td>
+                                        <span class="text-en">Needle-based injection systems - Part 1: General requirements</span>
+                                        <span class="text-cn">基于针头的注射系统 - 第1部分：通用要求</span>
+                                    </td>
+                                    <td>2022</td>
+                                    <td><span class="status-current">✅</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ISO 11608-5</td>
+                                    <td>
+                                        <span class="text-en">Automated functions</span>
+                                        <span class="text-cn">自动化功能</span>
+                                    </td>
+                                    <td>2022</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                </tr>
+                                <tr>
+                                    <td>ISO 23908</td>
+                                    <td>
+                                        <span class="text-en">Sharps injury protection</span>
+                                        <span class="text-cn">锐器伤害防护</span>
+                                    </td>
+                                    <td>2024</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                </tr>
+                                <tr>
+                                    <td>IEC 62366-1</td>
+                                    <td>
+                                        <span class="text-en">Usability engineering</span>
+                                        <span class="text-cn">可用性工程</span>
+                                    </td>
+                                    <td>2020</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                </tr>
+                                <tr>
+                                    <td>IEC 62304</td>
+                                    <td>
+                                        <span class="text-en">Software life cycle processes</span>
+                                        <span class="text-cn">软件生命周期过程</span>
+                                    </td>
+                                    <td>2006</td>
+                                    <td><span class="status-current">✅</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jurisdiction Coverage -->
+            <div class="section-header">
+                <h3>
+                    <span class="text-en">🌍 Jurisdiction Coverage</span>
+                    <span class="text-cn">🌍 管辖范围覆盖</span>
+                </h3>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>
+                        <span class="text-en">China (NMPA)</span>
+                        <span class="text-cn">中国 (NMPA)</span>
+                    </h3>
+                    <p>
+                        <span class="text-en">Primary market for Summed Medtech. Covers GB standards, YY standards, NMPA regulations.</span>
+                        <span class="text-cn">森迈医疗科技的主要市场。涵盖GB标准、YY标准、NMPA法规。</span>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>
+                        <span class="text-en">USA (FDA)</span>
+                        <span class="text-cn">美国 (FDA)</span>
+                    </h3>
+                    <p>
+                        <span class="text-en">Key export market. CFR regulations, guidance documents for combination products.</span>
+                        <span class="text-cn">主要出口市场。CFR法规、组合产品指导文件。</span>
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>
+                        <span class="text-en">European Union (MDR)</span>
+                        <span class="text-cn">欧盟 (MDR)</span>
+                    </h3>
+                    <p>
+                        <span class="text-en">EU 2017/745 MDR, harmonized standards for medical devices.</span>
+                        <span class="text-cn">EU 2017/745 MDR、医疗器械协调标准。</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product-Specific Tab -->
+        <div class="tab-content" id="product">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">🔧 Product-Specific Standards - Auto-Injector & Pen-Injector</span>
+                    <span class="text-cn">🔧 产品特定标准 - 自动注射器与笔式注射器</span>
+                </h2>
+            </div>
+
+            <p style="margin-bottom: 1.5rem;">
+                <span class="text-en">These standards are specifically critical for Summed Medtech's auto-injector and pen-injector products.</span>
+                <span class="text-cn">这些标准对森迈医疗科技的自动注射器和笔式注射器产品尤为重要。</span>
+            </p>
+
+            <!-- ISO 11608 Series -->
+            <div class="expandable open">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <h3>
+                        <span class="text-en">1️⃣ ISO 11608 Series - Needle-Based Injection Systems (CRITICAL)</span>
+                        <span class="text-cn">1️⃣ ISO 11608 系列 - 基于针头的注射系统 (关键)</span>
+                    </h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="text-en">Standard</span>
+                                        <span class="text-cn">标准</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Title</span>
+                                        <span class="text-cn">标题</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Year</span>
+                                        <span class="text-cn">年份</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Status</span>
+                                        <span class="text-cn">状态</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Criticality</span>
+                                        <span class="text-cn">关键性</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Link</span>
+                                        <span class="text-cn">链接</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISO 11608-1</td>
+                                    <td>
+                                        <span class="text-en">Part 1: Requirements and test methods for needle-based injection systems</span>
+                                        <span class="text-cn">第1部分：基于针头的注射系统要求和试验方法</span>
+                                    </td>
+                                    <td>2022</td>
+                                    <td><span class="status-current">✅</span></td>
+                                    <td>⭐⭐⭐</td>
+                                    <td><a href="https://www.iso.org/standard/75913.html" target="_blank">ISO</a></td>
+                                </tr>
+                                <tr>
+                                    <td>ISO 11608-2</td>
+                                    <td>
+                                        <span class="text-en">Part 2: Requirements and test methods for needles</span>
+                                        <span class="text-cn">第2部分：针头要求和试验方法</span>
+                                    </td>
+                                    <td>2022</td>
+                                    <td><span class="status-current">✅</span></td>
+                                    <td>⭐⭐⭐</td>
+                                    <td><a href="https://www.iso.org/standard/75914.html" target="_blank">ISO</a></td>
+                                </tr>
+                                <tr>
+                                    <td>ISO 11608-3</td>
+                                    <td>
+                                        <span class="text-en">Part 3: Finished containers</span>
+                                        <span class="text-cn">第3部分：成品容器</span>
+                                    </td>
+                                    <td>2022</td>
+                                    <td><span class="status-current">✅</span></td>
+                                    <td>⭐⭐⭐</td>
+                                    <td><a href="https://www.iso.org/standard/75915.html" target="_blank">ISO</a></td>
+                                </tr>
+                                <tr>
+                                    <td>ISO 11608-4</td>
+                                    <td>
+                                        <span class="text-en">Part 4: Needles and containers for pen injectors</span>
+                                        <span class="text-cn">第4部分：笔式注射器用针头和容器</span>
+                                    </td>
+                                    <td>2022</td>
+                                    <td><span class="status-current">✅</span></td>
+                                    <td>⭐⭐⭐</td>
+                                    <td><a href="https://www.iso.org/standard/75916.html" target="_blank">ISO</a></td>
+                                </tr>
+                                <tr>
+                                    <td>ISO 11608-5</td>
+                                    <td>
+                                        <span class="text-en">Part 5: Requirements and test methods for automated functions</span>
+                                        <span class="text-cn">第5部分：自动化功能的要求和试验方法</span>
+                                    </td>
+                                    <td>2022</td>
+                                    <td><span class="status-current">🔧</span></td>
+                                    <td>⭐⭐⭐ AUTO-INJECTOR</td>
+                                    <td><a href="https://www.iso.org/standard/75917.html" target="_blank">ISO</a></td>
+                                </tr>
+                                <tr>
+                                    <td>ISO 11608-6</td>
+                                    <td>
+                                        <span class="text-en">Part 6: Electronic add-on devices</span>
+                                        <span class="text-cn">第6部分：电子附加装置</span>
+                                    </td>
+                                    <td>2022</td>
+                                    <td><span class="status-current">✅</span></td>
+                                    <td>⭐⭐ SMART INJECTOR</td>
+                                    <td><a href="https://www.iso.org/standard/83616.html" target="_blank">ISO</a></td>
+                                </tr>
+                                <tr>
+                                    <td>ISO 11608-7</td>
+                                    <td>
+                                        <span class="text-en">Part 7: Electronic injection systems with automated features</span>
+                                        <span class="text-cn">第7部分：具有自动化功能的电子注射系统</span>
+                                    </td>
+                                    <td>2016</td>
+                                    <td><span class="status-check">⚠️</span></td>
+                                    <td>⭐⭐ Check for update</td>
+                                    <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sharps Protection -->
+            <div class="expandable open">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <h3>
+                        <span class="text-en">2️⃣ Sharps Injury Protection (CRITICAL for Auto-Injectors)</span>
+                        <span class="text-cn">2️⃣ 锐器伤害防护 (自动注射器关键)</span>
+                    </h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="text-en">Standard</span>
+                                        <span class="text-cn">标准</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Title</span>
+                                        <span class="text-cn">标题</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Year</span>
+                                        <span class="text-cn">年份</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Status</span>
+                                        <span class="text-cn">状态</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Link</span>
+                                        <span class="text-cn">链接</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ISO 23908</td>
+                                    <td>
+                                        <span class="text-en">Sharps injury protection - Requirements and test methods</span>
+                                        <span class="text-cn">锐器伤害防护 - 要求和试验方法</span>
+                                    </td>
+                                    <td>2024</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                    <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                                </tr>
+                                <tr>
+                                    <td>GB/T 42063</td>
+                                    <td>
+                                        <span class="text-en">Sharps injury protection (IDT ISO 23908)</span>
+                                        <span class="text-cn">锐器伤害防护 (等同采用 ISO 23908)</span>
+                                    </td>
+                                    <td>2022</td>
+                                    <td><span class="status-check">⚠️</span></td>
+                                    <td><a href="https://openstd.samr.gov.cn/" target="_blank">GB</a></td>
+                                </tr>
+                                <tr>
+                                    <td>FDA Guidance</td>
+                                    <td>
+                                        <span class="text-en">Medical Devices with Sharps Injury Prevention Features</span>
+                                        <span class="text-cn">具有锐器伤害防护特征的医疗器械</span>
+                                    </td>
+                                    <td>2024</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                    <td><a href="https://www.fda.gov/" target="_blank">FDA</a></td>
+                                </tr>
+                                <tr>
+                                    <td>EN ISO 23908</td>
+                                    <td>
+                                        <span class="text-en">Sharps injury protection (European)</span>
+                                        <span class="text-cn">锐器伤害防护 (欧洲)</span>
+                                    </td>
+                                    <td>2024</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                    <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Human Factors -->
+            <div class="expandable open">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <h3>
+                        <span class="text-en">3️⃣ Human Factors & Usability (CRITICAL for Self-Injection)</span>
+                        <span class="text-cn">3️⃣ 人因工程与可用性 (自我注射关键)</span>
+                    </h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="text-en">Standard</span>
+                                        <span class="text-cn">标准</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Title</span>
+                                        <span class="text-cn">标题</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Year</span>
+                                        <span class="text-cn">年份</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Status</span>
+                                        <span class="text-cn">状态</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Link</span>
+                                        <span class="text-cn">链接</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>IEC 62366-1</td>
+                                    <td>
+                                        <span class="text-en">Usability engineering for medical devices</span>
+                                        <span class="text-cn">医疗器械可用性工程</span>
+                                    </td>
+                                    <td>2020</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                    <td><a href="https://webstore.iec.ch/" target="_blank">IEC</a></td>
+                                </tr>
+                                <tr>
+                                    <td>YY/T 1474</td>
+                                    <td>
+                                        <span class="text-en">Usability engineering (IDT IEC 62366-1)</span>
+                                        <span class="text-cn">可用性工程 (等同采用 IEC 62366-1)</span>
+                                    </td>
+                                    <td>2016</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                    <td><a href="https://openstd.samr.gov.cn/" target="_blank">YY</a></td>
+                                </tr>
+                                <tr>
+                                    <td>AAMI HE75</td>
+                                    <td>
+                                        <span class="text-en">Human factors engineering design of medical devices</span>
+                                        <span class="text-cn">医疗器械人因工程设计</span>
+                                    </td>
+                                    <td>2009</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                    <td><a href="https://www.aami.org/" target="_blank">AAMI</a></td>
+                                </tr>
+                                <tr>
+                                    <td>FDA HF Guidance</td>
+                                    <td>
+                                        <span class="text-en">Applying Human Factors to Medical Devices</span>
+                                        <span class="text-cn">医疗器械人因工程应用</span>
+                                    </td>
+                                    <td>2016</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                    <td><a href="https://www.fda.gov/media/117480/download" target="_blank">FDA</a></td>
+                                </tr>
+                                <tr>
+                                    <td>NMPA Usability</td>
+                                    <td>
+                                        <span class="text-en">Medical device usability engineering registration review guidance</span>
+                                        <span class="text-cn">医疗器械可用性工程注册审查指导原则</span>
+                                    </td>
+                                    <td>2024</td>
+                                    <td><span class="status-current">🔧 ✅</span></td>
+                                    <td><a href="https://www.cmde.org.cn/" target="_blank">NMPA</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Software & Cybersecurity -->
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <h3>
+                        <span class="text-en">4️⃣ Software & Electronics (Smart Injectors)</span>
+                        <span class="text-cn">4️⃣ 软件与电子设备 (智能注射器)</span>
+                    </h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="text-en">Standard</span>
+                                        <span class="text-cn">标准</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Title</span>
+                                        <span class="text-cn">标题</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Year</span>
+                                        <span class="text-cn">年份</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Status</span>
+                                        <span class="text-cn">状态</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Link</span>
+                                        <span class="text-cn">链接</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>IEC 62304</td>
+                                    <td>
+                                        <span class="text-en">Medical device software - Software life cycle processes</span>
+                                        <span class="text-cn">医疗器械软件 - 软件生命周期过程</span>
+                                    </td>
+                                    <td>2006</td>
+                                    <td><span class="status-current">✅</span></td>
+                                    <td><a href="https://webstore.iec.ch/" target="_blank">IEC</a></td>
+                                </tr>
+                                <tr>
+                                    <td>YY/T 0664</td>
+                                    <td>
+                                        <span class="text-en">Medical device software life cycle processes (IDT IEC 62304)</span>
+                                        <span class="text-cn">医疗器械软件生命周期过程</span>
+                                    </td>
+                                    <td>2020</td>
+                                    <td><span class="status-current">✅</span></td>
+                                    <td><a href="https://openstd.samr.gov.cn/" target="_blank">YY</a></td>
+                                </tr>
+                                <tr>
+                                    <td>IEC 81001-5-1</td>
+                                    <td>
+                                        <span class="text-en">Health software security</span>
+                                        <span class="text-cn">健康软件安全</span>
+                                    </td>
+                                    <td>2021</td>
+                                    <td><span class="status-current">✅</span></td>
+                                    <td><a href="https://webstore.iec.ch/" target="_blank">IEC</a></td>
+                                </tr>
+                                <tr>
+                                    <td>YY/T 1843</td>
+                                    <td>
+                                        <span class="text-en">Medical electrical equipment cybersecurity</span>
+                                        <span class="text-cn">医用电气设备网络安全</span>
+                                    </td>
+                                    <td>2022</td>
+                                    <td><span class="status-current">✅</span></td>
+                                    <td><a href="https://openstd.samr.gov.cn/" target="_blank">YY</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Packaging & Testing -->
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <h3>
+                        <span class="text-en">5️⃣ Packaging & Testing (Critical for Auto-Injectors)</span>
+                        <span class="text-cn">5️⃣ 包装与测试 (自动注射器关键)</span>
+                    </h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="text-en">Standard</span>
+                                        <span class="text-cn">标准</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Title</span>
+                                        <span class="text-cn">标题</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Year</span>
+                                        <span class="text-cn">年份</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-en">Link</span>
+                                        <span class="text-cn">链接</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ASTM D4169</td>
+                                    <td>
+                                        <span class="text-en">Performance testing of shipping containers and systems</span>
+                                        <span class="text-cn">运输容器和系统性能测试</span>
+                                    </td>
+                                    <td>2023</td>
+                                    <td><a href="https://www.astm.org/" target="_blank">ASTM</a></td>
+                                </tr>
+                                <tr>
+                                    <td>ASTM F1980</td>
+                                    <td>
+                                        <span class="text-en">Accelerated aging of sterile barrier systems</span>
+                                        <span class="text-cn">无菌屏障系统加速老化</span>
+                                    </td>
+                                    <td>2021</td>
+                                    <td><a href="https://www.astm.org/" target="_blank">ASTM</a></td>
+                                </tr>
+                                <tr>
+                                    <td>ISO 11607-1</td>
+                                    <td>
+                                        <span class="text-en">Packaging for terminally sterilized medical devices</span>
+                                        <span class="text-cn">最终灭菌医疗器械包装</span>
+                                    </td>
+                                    <td>2019</td>
+                                    <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                                </tr>
+                                <tr>
+                                    <td>YY/T 0681.1</td>
+                                    <td>
+                                        <span class="text-en">Sterile medical device packaging - Accelerated aging</span>
+                                        <span class="text-cn">无菌医疗器械包装 - 加速老化</span>
+                                    </td>
+                                    <td>2018</td>
+                                    <td><a href="https://openstd.samr.gov.cn/" target="_blank">YY</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ISO Standards Tab -->
+        <div class="tab-content" id="iso">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">ISO Standards</span>
+                    <span class="text-cn">ISO 标准</span>
+                </h2>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="text-en">Standard</span>
+                                <span class="text-cn">标准号</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Title</span>
+                                <span class="text-cn">标题</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Version</span>
+                                <span class="text-cn">版本</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Status</span>
+                                <span class="text-cn">状态</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Relevance</span>
+                                <span class="text-cn">相关性</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Link</span>
+                                <span class="text-cn">链接</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ISO 13485</td>
+                            <td>
+                                <span class="text-en">Quality management systems - Requirements for regulatory purposes</span>
+                                <span class="text-cn">质量管理体系 - 用于法规的要求</span>
+                            </td>
+                            <td>2016</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td>QMS Foundation</td>
+                            <td><a href="https://www.iso.org/standard/59752.html" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>ISO 14971</td>
+                            <td>
+                                <span class="text-en">Application of risk management to medical devices</span>
+                                <span class="text-cn">医疗器械风险管理应用</span>
+                            </td>
+                            <td>2019</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td>Risk Management</td>
+                            <td><a href="https://www.iso.org/standard/74004.html" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>ISO 10993-1</td>
+                            <td>
+                                <span class="text-en">Biological evaluation - Part 1: Evaluation and testing</span>
+                                <span class="text-cn">生物学评价 - 第1部分：评价与试验</span>
+                            </td>
+                            <td>2009</td>
+                            <td><span class="status-check">⚠️</span></td>
+                            <td>Check for 2024 update</td>
+                            <td><a href="https://www.iso.org/standard/64960.html" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>ISO 14155</td>
+                            <td>
+                                <span class="text-en">Clinical investigation - Good clinical practice</span>
+                                <span class="text-cn">临床试验 - 良好临床实践</span>
+                            </td>
+                            <td>2020</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td>Clinical trials</td>
+                            <td><a href="https://www.iso.org/standard/71646.html" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>ISO 15223-1</td>
+                            <td>
+                                <span class="text-en">Symbols to be used with medical device labels</span>
+                                <span class="text-cn">医疗器械标签用符号</span>
+                            </td>
+                            <td>2021</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td>Labeling</td>
+                            <td><a href="https://www.iso.org/standard/79870.html" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>ISO 80369-20</td>
+                            <td>
+                                <span class="text-en">Small-bore connectors - Common test methods</span>
+                                <span class="text-cn">小口径连接器 - 通用试验方法</span>
+                            </td>
+                            <td>2024</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td>Connector compatibility</td>
+                            <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>ISO 11040-4</td>
+                            <td>
+                                <span class="text-en">Pre-filled syringes - Part 4: Requirements and testing</span>
+                                <span class="text-cn">预灌封注射器 - 第4部分：要求和试验</span>
+                            </td>
+                            <td>2024</td>
+                            <td><span class="status-current">🔧</span></td>
+                            <td>Prefilled syringes</td>
+                            <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>ISO 11607-1</td>
+                            <td>
+                                <span class="text-en">Packaging for terminally sterilized medical devices</span>
+                                <span class="text-cn">最终灭菌医疗器械包装</span>
+                            </td>
+                            <td>2019</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td>Packaging</td>
+                            <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>ISO 24971</td>
+                            <td>
+                                <span class="text-en">Guidance on the application of ISO 14971</span>
+                                <span class="text-cn">ISO 14971应用指南</span>
+                            </td>
+                            <td>2020</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td>Risk guidance</td>
+                            <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>ISO 9001</td>
+                            <td>
+                                <span class="text-en">Quality management systems - Requirements</span>
+                                <span class="text-cn">质量管理体系 - 要求</span>
+                            </td>
+                            <td>2015</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td>QMS requirements</td>
+                            <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>ISO 14644-1</td>
+                            <td>
+                                <span class="text-en">Cleanrooms - Classification of air cleanliness</span>
+                                <span class="text-cn">洁净室 - 空气洁净度分级</span>
+                            </td>
+                            <td>2015</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td>Cleanroom</td>
+                            <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- FDA Tab -->
+        <div class="tab-content" id="fda">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">FDA Regulations & Guidance</span>
+                    <span class="text-cn">FDA 法规与指导文件</span>
+                </h2>
+            </div>
+
+            <h3>
+                <span class="text-en">Code of Federal Regulations (CFR)</span>
+                <span class="text-cn">美国联邦法规 (CFR)</span>
+            </h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="text-en">CFR Part</span>
+                                <span class="text-cn">CFR 部分</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Title</span>
+                                <span class="text-cn">标题</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Relevance</span>
+                                <span class="text-cn">相关性</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Link</span>
+                                <span class="text-cn">链接</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>21 CFR 210</td>
+                            <td>
+                                <span class="text-en">Current Good Manufacturing Practice in Manufacturing, Processing, Packing, or Holding of Drugs</span>
+                                <span class="text-cn">药品生产、加工、包装或保存的现行良好生产规范</span>
+                            </td>
+                            <td>Combination products</td>
+                            <td><a href="https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/CFRSearch.cfm?CFRPart=210" target="_blank">FDA</a></td>
+                        </tr>
+                        <tr>
+                            <td>21 CFR 211</td>
+                            <td>
+                                <span class="text-en">Current Good Manufacturing Practice for Finished Pharmaceuticals</span>
+                                <span class="text-cn">成品药的现行良好生产规范</span>
+                            </td>
+                            <td>Drug-device combos</td>
+                            <td><a href="https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/CFRSearch.cfm?CFRPart=211" target="_blank">FDA</a></td>
+                        </tr>
+                        <tr>
+                            <td>21 CFR 4</td>
+                            <td>
+                                <span class="text-en">Current Good Manufacturing Practice for Combination Products</span>
+                                <span class="text-cn">组合产品的现行良好生产规范</span>
+                            </td>
+                            <td><span class="status-critical">🔧 CRITICAL</span></td>
+                            <td><a href="https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/CFRSearch.cfm?CFRPart=4" target="_blank">FDA</a></td>
+                        </tr>
+                        <tr>
+                            <td>21 CFR 820</td>
+                            <td>
+                                <span class="text-en">Quality System Regulation</span>
+                                <span class="text-cn">质量体系法规</span>
+                            </td>
+                            <td>QMS</td>
+                            <td><a href="https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/CFRSearch.cfm?CFRPart=820" target="_blank">FDA</a></td>
+                        </tr>
+                        <tr>
+                            <td>21 CFR 801</td>
+                            <td>
+                                <span class="text-en">Labeling</span>
+                                <span class="text-cn">标签</span>
+                            </td>
+                            <td>Labeling</td>
+                            <td><a href="https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/CFRSearch.cfm?CFRPart=801" target="_blank">FDA</a></td>
+                        </tr>
+                        <tr>
+                            <td>21 CFR 803</td>
+                            <td>
+                                <span class="text-en">Medical Device Reporting</span>
+                                <span class="text-cn">医疗器械报告</span>
+                            </td>
+                            <td>MDR</td>
+                            <td><a href="https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/CFRSearch.cfm?CFRPart=803" target="_blank">FDA</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="margin-top: 2rem;">
+                <span class="text-en">Key Guidance Documents</span>
+                <span class="text-cn">主要指导文件</span>
+            </h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="text-en">Guidance</span>
+                                <span class="text-cn">指导文件</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Date</span>
+                                <span class="text-cn">日期</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Relevance</span>
+                                <span class="text-cn">相关性</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Link</span>
+                                <span class="text-cn">链接</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="text-en">Applying Human Factors and Usability Engineering to Medical Devices</span>
+                                <span class="text-cn">医疗器械人因工程与可用性工程应用</span>
+                            </td>
+                            <td>2016</td>
+                            <td><span class="status-critical">🔧 Human factors</span></td>
+                            <td><a href="https://www.fda.gov/media/117480/download" target="_blank">FDA</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Content of Premarket Submissions for Device Software Functions</span>
+                                <span class="text-cn">器械软件功能的上市前提交内容</span>
+                            </td>
+                            <td>2023</td>
+                            <td>Software</td>
+                            <td><a href="https://www.fda.gov/media/119703/download" target="_blank">FDA</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Medical Device Cybersecurity</span>
+                                <span class="text-cn">医疗器械网络安全</span>
+                            </td>
+                            <td>2023</td>
+                            <td>Cybersecurity</td>
+                            <td><a href="https://www.fda.gov/media/119703/download" target="_blank">FDA</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Current Good Manufacturing Practice Requirements for Combination Products</span>
+                                <span class="text-cn">组合产品的现行良好生产规范要求</span>
+                            </td>
+                            <td>2017</td>
+                            <td><span class="status-critical">🔧 CRITICAL</span></td>
+                            <td><a href="https://www.fda.gov/media/117474/download" target="_blank">FDA</a></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Sharps Injury Prevention Features</span>
+                                <span class="text-cn">锐器伤害防护特征</span>
+                            </td>
+                            <td>2024</td>
+                            <td><span class="status-critical">🔧 CRITICAL</span></td>
+                            <td><a href="https://www.fda.gov/" target="_blank">FDA</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- NMPA Tab -->
+        <div class="tab-content" id="nmpa">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">NMPA/Chinese Standards</span>
+                    <span class="text-cn">NMPA/中国标准</span>
+                </h2>
+            </div>
+
+            <h3>
+                <span class="text-en">Laws and Regulations (法律行政法规)</span>
+                <span class="text-cn">法律法规</span>
+            </h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="text-en">Regulation</span>
+                                <span class="text-cn">法规</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Title</span>
+                                <span class="text-cn">标题</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Year/Order</span>
+                                <span class="text-cn">年份/令号</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Relevance</span>
+                                <span class="text-cn">相关性</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Link</span>
+                                <span class="text-cn">链接</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>医疗器械监督管理条例</td>
+                            <td>
+                                <span class="text-en">Supervision and Administration Regulation on Medical Devices</span>
+                                <span class="text-cn">医疗器械监督管理条例</span>
+                            </td>
+                            <td>2025.01.07</td>
+                            <td><span class="status-critical">🔧 CRITICAL</span></td>
+                            <td><a href="https://www.nmpa.gov.cn/" target="_blank">NMPA</a></td>
+                        </tr>
+                        <tr>
+                            <td>医疗器械注册与备案管理办法</td>
+                            <td>
+                                <span class="text-en">Registration and Filing Management Measures</span>
+                                <span class="text-cn">医疗器械注册与备案管理办法</span>
+                            </td>
+                            <td>2021 - Order 47</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td><a href="https://www.nmpa.gov.cn/" target="_blank">NMPA</a></td>
+                        </tr>
+                        <tr>
+                            <td>医疗器械生产监督管理办法</td>
+                            <td>
+                                <span class="text-en">Production Supervision and Administration Measures</span>
+                                <span class="text-cn">医疗器械生产监督管理办法</span>
+                            </td>
+                            <td>2022 - Order 53</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td><a href="https://www.nmpa.gov.cn/" target="_blank">NMPA</a></td>
+                        </tr>
+                        <tr>
+                            <td>医疗器械分类规则</td>
+                            <td>
+                                <span class="text-en">Classification Rules</span>
+                                <span class="text-cn">医疗器械分类规则</span>
+                            </td>
+                            <td>2015 - Order 15</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td><a href="https://www.nmpa.gov.cn/" target="_blank">NMPA</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="margin-top: 2rem;">
+                <span class="text-en">GB Standards (National Standards)</span>
+                <span class="text-cn">GB标准 (国家标准)</span>
+            </h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="text-en">Standard</span>
+                                <span class="text-cn">标准号</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Title</span>
+                                <span class="text-cn">标题</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Year</span>
+                                <span class="text-cn">年份</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Status</span>
+                                <span class="text-cn">状态</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Link</span>
+                                <span class="text-cn">链接</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>GB/T 42061-2022</td>
+                            <td>
+                                <span class="text-en">Quality management systems (IDT ISO 13485:2016)</span>
+                                <span class="text-cn">质量管理体系 (等同采用 ISO 13485:2016)</span>
+                            </td>
+                            <td>2022</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td><a href="https://openstd.samr.gov.cn/" target="_blank">GB</a></td>
+                        </tr>
+                        <tr>
+                            <td>GB/T 42062-2022</td>
+                            <td>
+                                <span class="text-en">Risk management (IDT ISO 14971:2019)</span>
+                                <span class="text-cn">风险管理 (等同采用 ISO 14971:2019)</span>
+                            </td>
+                            <td>2022</td>
+                            <td><span class="status-current">🔧</span></td>
+                            <td><a href="https://openstd.samr.gov.cn/" target="_blank">GB</a></td>
+                        </tr>
+                        <tr>
+                            <td>GB/T 16886.1-2022</td>
+                            <td>
+                                <span class="text-en">Biological evaluation - Part 1: Evaluation and testing</span>
+                                <span class="text-cn">生物学评价 - 第1部分：评价与试验</span>
+                            </td>
+                            <td>2022</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td><a href="https://openstd.samr.gov.cn/" target="_blank">GB</a></td>
+                        </tr>
+                        <tr>
+                            <td>GB/T 25000.51-2016</td>
+                            <td>
+                                <span class="text-en">Systems and software engineering - Part 51: RUSP quality</span>
+                                <span class="text-cn">系统与软件工程 - 第51部分：就绪可用软件产品质量</span>
+                            </td>
+                            <td>2016</td>
+                            <td><span class="status-check">⚠️</span></td>
+                            <td><a href="https://openstd.samr.gov.cn/" target="_blank">GB</a></td>
+                        </tr>
+                        <tr>
+                            <td>GB/T 42063-2022</td>
+                            <td>
+                                <span class="text-en">Sharps injury protection (IDT ISO 23908)</span>
+                                <span class="text-cn">锐器伤害防护 (等同采用 ISO 23908)</span>
+                            </td>
+                            <td>2022</td>
+                            <td><span class="status-check">⚠️</span></td>
+                            <td><a href="https://openstd.samr.gov.cn/" target="_blank">GB</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="margin-top: 2rem;">
+                <span class="text-en">YY Standards (Medical Device Industry Standards)</span>
+                <span class="text-cn">YY标准 (医疗器械行业标准)</span>
+            </h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="text-en">Standard</span>
+                                <span class="text-cn">标准号</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Title</span>
+                                <span class="text-cn">标题</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Year</span>
+                                <span class="text-cn">年份</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Status</span>
+                                <span class="text-cn">状态</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Link</span>
+                                <span class="text-cn">链接</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>YY/T 0664-2020</td>
+                            <td>
+                                <span class="text-en">Medical device software - Software life cycle processes (IDT IEC 62304)</span>
+                                <span class="text-cn">医疗器械软件 - 软件生命周期过程</span>
+                            </td>
+                            <td>2020</td>
+                            <td><span class="status-current">🔧</span></td>
+                            <td><a href="https://openstd.samr.gov.cn/" target="_blank">YY</a></td>
+                        </tr>
+                        <tr>
+                            <td>YY/T 1474-2016</td>
+                            <td>
+                                <span class="text-en">Usability engineering application to medical devices (IDT IEC 62366-1)</span>
+                                <span class="text-cn">可用性工程应用 (等同采用 IEC 62366-1)</span>
+                            </td>
+                            <td>2016</td>
+                            <td><span class="status-current">🔧</span></td>
+                            <td><a href="https://openstd.samr.gov.cn/" target="_blank">YY</a></td>
+                        </tr>
+                        <tr>
+                            <td>YY/T 1843-2022</td>
+                            <td>
+                                <span class="text-en">Medical electrical equipment - Cybersecurity basic requirements</span>
+                                <span class="text-cn">医用电气设备 - 网络安全基本要求</span>
+                            </td>
+                            <td>2022</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td><a href="https://openstd.samr.gov.cn/" target="_blank">YY</a></td>
+                        </tr>
+                        <tr>
+                            <td>YY/T 1768.1-2021</td>
+                            <td>
+                                <span class="text-en">Needle-based injection systems - Part 1 (IDT ISO 11608-1:2014)</span>
+                                <span class="text-cn">基于针头的注射系统 - 第1部分</span>
+                            </td>
+                            <td>2021</td>
+                            <td><span class="status-check">⚠️</span></td>
+                            <td><a href="https://openstd.samr.gov.cn/" target="_blank">YY</a></td>
+                        </tr>
+                        <tr>
+                            <td>YY/T 0916.7-2024</td>
+                            <td>
+                                <span class="text-en">Small-bore connectors - Part 7: Intravascular/subcutaneous</span>
+                                <span class="text-cn">小口径连接器 - 第7部分：血管内/皮下</span>
+                            </td>
+                            <td>2024</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td><a href="https://openstd.samr.gov.cn/" target="_blank">YY</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- EU Tab -->
+        <div class="tab-content" id="eu">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">EU/EMA Regulations</span>
+                    <span class="text-cn">欧盟/EMA 法规</span>
+                </h2>
+            </div>
+
+            <h3>
+                <span class="text-en">EU Regulations</span>
+                <span class="text-cn">欧盟法规</span>
+            </h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="text-en">Regulation</span>
+                                <span class="text-cn">法规</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Title</span>
+                                <span class="text-cn">标题</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Year</span>
+                                <span class="text-cn">年份</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Relevance</span>
+                                <span class="text-cn">相关性</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Link</span>
+                                <span class="text-cn">链接</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>EU 2017/745</td>
+                            <td>
+                                <span class="text-en">Medical Device Regulation (MDR)</span>
+                                <span class="text-cn">医疗器械法规 (MDR)</span>
+                            </td>
+                            <td>2017</td>
+                            <td><span class="status-critical">🔧 CRITICAL</span></td>
+                            <td><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32017R0745" target="_blank">EUR-Lex</a></td>
+                        </tr>
+                        <tr>
+                            <td>EU 2017/746</td>
+                            <td>
+                                <span class="text-en">In Vitro Diagnostic Regulation (IVDR)</span>
+                                <span class="text-cn">体外诊断法规 (IVDR)</span>
+                            </td>
+                            <td>2017</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32017R0746" target="_blank">EUR-Lex</a></td>
+                        </tr>
+                        <tr>
+                            <td>EU 2021/2226</td>
+                            <td>
+                                <span class="text-en">MDR Amendment</span>
+                                <span class="text-cn">MDR修正案</span>
+                            </td>
+                            <td>2021</td>
+                            <td><span class="status-current">✅</span></td>
+                            <td><a href="https://eur-lex.europa.eu/" target="_blank">EUR-Lex</a></td>
+                        </tr>
+                        <tr>
+                            <td>REACH</td>
+                            <td>
+                                <span class="text-en">Registration, Evaluation, Authorisation and Restriction of Chemicals</span>
+                                <span class="text-cn">化学品注册、评估、授权和限制</span>
+                            </td>
+                            <td>Current</td>
+                            <td>Chemical safety</td>
+                            <td><a href="https://echa.europa.eu/regulations/reach" target="_blank">ECHA</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="margin-top: 2rem;">
+                <span class="text-en">EU Harmonized Standards (EN ISO/EN IEC)</span>
+                <span class="text-cn">欧盟协调标准 (EN ISO/EN IEC)</span>
+            </h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="text-en">Standard</span>
+                                <span class="text-cn">标准</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Title</span>
+                                <span class="text-cn">标题</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Year</span>
+                                <span class="text-cn">年份</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Notes</span>
+                                <span class="text-cn">备注</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Link</span>
+                                <span class="text-cn">链接</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>EN ISO 13485</td>
+                            <td>
+                                <span class="text-en">Medical devices - Quality management systems</span>
+                                <span class="text-cn">医疗器械 - 质量管理体系</span>
+                            </td>
+                            <td>2016</td>
+                            <td>Harmonized under MDR</td>
+                            <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>EN ISO 14971</td>
+                            <td>
+                                <span class="text-en">Medical devices - Risk management</span>
+                                <span class="text-cn">医疗器械 - 风险管理</span>
+                            </td>
+                            <td>2019</td>
+                            <td>Harmonized under MDR</td>
+                            <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>EN ISO 11608 series</td>
+                            <td>
+                                <span class="text-en">Needle-based injection systems</span>
+                                <span class="text-cn">基于针头的注射系统</span>
+                            </td>
+                            <td>2022</td>
+                            <td><span class="status-critical">🔧 CRITICAL</span></td>
+                            <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                        </tr>
+                        <tr>
+                            <td>EN ISO 23908</td>
+                            <td>
+                                <span class="text-en">Sharps injury protection</span>
+                                <span class="text-cn">锐器伤害防护</span>
+                            </td>
+                            <td>2024</td>
+                            <td><span class="status-critical">🔧 Sharps safety</span></td>
+                            <td><a href="https://www.iso.org/" target="_blank">ISO</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- IEC Tab -->
+        <div class="tab-content" id="iec">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">IEC Standards</span>
+                    <span class="text-cn">IEC 标准</span>
+                </h2>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="text-en">Standard</span>
+                                <span class="text-cn">标准号</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Title</span>
+                                <span class="text-cn">标题</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Year</span>
+                                <span class="text-cn">年份</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Relevance</span>
+                                <span class="text-cn">相关性</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Link</span>
+                                <span class="text-cn">链接</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>IEC 60601-1</td>
+                            <td>
+                                <span class="text-en">Medical electrical equipment - Part 1: General requirements</span>
+                                <span class="text-cn">医用电气设备 - 第1部分：通用要求</span>
+                            </td>
+                            <td>2012</td>
+                            <td>Electrical safety</td>
+                            <td><a href="https://webstore.iec.ch/" target="_blank">IEC</a></td>
+                        </tr>
+                        <tr>
+                            <td>IEC 60601-1-6</td>
+                            <td>
+                                <span class="text-en">Medical electrical equipment - Part 1-6: Usability</span>
+                                <span class="text-cn">医用电气设备 - 第1-6部分：可用性</span>
+                            </td>
+                            <td>2020</td>
+                            <td><span class="status-critical">🔧 Usability</span></td>
+                            <td><a href="https://webstore.iec.ch/" target="_blank">IEC</a></td>
+                        </tr>
+                        <tr>
+                            <td>IEC 62304</td>
+                            <td>
+                                <span class="text-en">Medical device software - Software life cycle processes</span>
+                                <span class="text-cn">医疗器械软件 - 软件生命周期过程</span>
+                            </td>
+                            <td>2006</td>
+                            <td><span class="status-critical">🔧 Software</span></td>
+                            <td><a href="https://webstore.iec.ch/" target="_blank">IEC</a></td>
+                        </tr>
+                        <tr>
+                            <td>IEC 62366-1</td>
+                            <td>
+                                <span class="text-en">Application of usability engineering to medical devices</span>
+                                <span class="text-cn">可用性工程在医疗器械中的应用</span>
+                            </td>
+                            <td>2020</td>
+                            <td><span class="status-critical">🔧 Usability</span></td>
+                            <td><a href="https://webstore.iec.ch/" target="_blank">IEC</a></td>
+                        </tr>
+                        <tr>
+                            <td>IEC 81001-5-1</td>
+                            <td>
+                                <span class="text-en">Health software and health IT systems safety - Part 5-1: Security</span>
+                                <span class="text-cn">健康软件和健康IT系统安全 - 第5-1部分：安全</span>
+                            </td>
+                            <td>2021</td>
+                            <td><span class="status-critical">🔧 Cybersecurity</span></td>
+                            <td><a href="https://webstore.iec.ch/" target="_blank">IEC</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ASTM Tab -->
+        <div class="tab-content" id="astm">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">ASTM Standards</span>
+                    <span class="text-cn">ASTM 标准</span>
+                </h2>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="text-en">Standard</span>
+                                <span class="text-cn">标准号</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Title</span>
+                                <span class="text-cn">标题</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Year</span>
+                                <span class="text-cn">年份</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Relevance</span>
+                                <span class="text-cn">相关性</span>
+                            </th>
+                            <th>
+                                <span class="text-en">Link</span>
+                                <span class="text-cn">链接</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ASTM D4169-23</td>
+                            <td>
+                                <span class="text-en">Performance testing of shipping containers and systems</span>
+                                <span class="text-cn">运输容器和系统性能测试</span>
+                            </td>
+                            <td>2023</td>
+                            <td><span class="status-critical">🔧 Packaging</span></td>
+                            <td><a href="https://www.astm.org/" target="_blank">ASTM</a></td>
+                        </tr>
+                        <tr>
+                            <td>ASTM F1980-21</td>
+                            <td>
+                                <span class="text-en">Accelerated aging of sterile barrier systems</span>
+                                <span class="text-cn">无菌屏障系统加速老化</span>
+                            </td>
+                            <td>2021</td>
+                            <td><span class="status-critical">🔧 Accelerated aging</span></td>
+                            <td><a href="https://www.astm.org/" target="_blank">ASTM</a></td>
+                        </tr>
+                        <tr>
+                            <td>ASTM D642-15</td>
+                            <td>
+                                <span class="text-en">Determining compressive resistance of shipping containers</span>
+                                <span class="text-cn">测定运输容器的抗压阻力</span>
+                            </td>
+                            <td>2015</td>
+                            <td>Packaging</td>
+                            <td><a href="https://www.astm.org/" target="_blank">ASTM</a></td>
+                        </tr>
+                        <tr>
+                            <td>ASTM D5276-19</td>
+                            <td>
+                                <span class="text-en">Drop test of loaded containers</span>
+                                <span class="text-cn">装载容器的跌落试验</span>
+                            </td>
+                            <td>2019</td>
+                            <td>Drop testing</td>
+                            <td><a href="https://www.astm.org/" target="_blank">ASTM</a></td>
+                        </tr>
+                        <tr>
+                            <td>ASTM D4728-17</td>
+                            <td>
+                                <span class="text-en">Random vibration testing of shipping containers</span>
+                                <span class="text-cn">运输容器的随机振动试验</span>
+                            </td>
+                            <td>2017</td>
+                            <td>Vibration</td>
+                            <td><a href="https://www.astm.org/" target="_blank">ASTM</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Cross-Reference Tab -->
+        <div class="tab-content" id="cross-ref">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">Cross-Reference Table (Equivalent Standards Across Jurisdictions)</span>
+                    <span class="text-cn">对照表 (各管辖区等同标准)</span>
+                </h2>
+            </div>
+
+            <p style="margin-bottom: 1.5rem;">
+                <span class="text-en">This table shows equivalent standards across different jurisdictions for easy reference.</span>
+                <span class="text-cn">此表显示不同管辖区的等同标准,便于参考。</span>
+            </p>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="text-en">Topic</span>
+                                <span class="text-cn">主题</span>
+                            </th>
+                            <th>
+                                <span class="text-en">NMPA/China</span>
+                                <span class="text-cn">NMPA/中国</span>
+                            </th>
+                            <th>
+                                <span class="text-en">FDA</span>
+                                <span class="text-cn">FDA</span>
+                            </th>
+                            <th>
+                                <span class="text-en">EU/MDR</span>
+                                <span class="text-cn">欧盟/MDR</span>
+                            </th>
+                            <th>
+                                <span class="text-en">ISO/IEC</span>
+                                <span class="text-cn">ISO/IEC</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="text-en">Quality Management System</span>
+                                <span class="text-cn">质量管理体系</span>
+                            </td>
+                            <td>GB/T 42061-2022</td>
+                            <td>21 CFR 820</td>
+                            <td>EN ISO 13485</td>
+                            <td>ISO 13485:2016</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Risk Management</span>
+                                <span class="text-cn">风险管理</span>
+                            </td>
+                            <td>GB/T 42062-2022</td>
+                            <td>General QSR principles</td>
+                            <td>EN ISO 14971</td>
+                            <td>ISO 14971:2019</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Software Lifecycle</span>
+                                <span class="text-cn">软件生命周期</span>
+                            </td>
+                            <td>YY/T 0664-2020</td>
+                            <td>General principles</td>
+                            <td>EN IEC 62304</td>
+                            <td>IEC 62304:2006</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Usability Engineering</span>
+                                <span class="text-cn">可用性工程</span>
+                            </td>
+                            <td>YY/T 1474-2016</td>
+                            <td>HF Guidance</td>
+                            <td>EN IEC 62366</td>
+                            <td>IEC 62366-1:2020</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Biological Evaluation</span>
+                                <span class="text-cn">生物学评价</span>
+                            </td>
+                            <td>GB/T 16886 series</td>
+                            <td>FDA Blue Book guidance</td>
+                            <td>EN ISO 10993 series</td>
+                            <td>ISO 10993 series</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Electrical Safety</span>
+                                <span class="text-cn">电气安全</span>
+                            </td>
+                            <td>GB 9706.1-2020</td>
+                            <td>AAMI/IEC 60601 series</td>
+                            <td>EN IEC 60601 series</td>
+                            <td>IEC 60601-1:2012</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Cybersecurity</span>
+                                <span class="text-cn">网络安全</span>
+                            </td>
+                            <td>YY/T 1843-2022</td>
+                            <td>Cybersecurity guidances</td>
+                            <td>EN IEC 81001-5-1</td>
+                            <td>IEC 81001-5-1:2021</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Sharps Protection</span>
+                                <span class="text-cn">锐器防护</span>
+                            </td>
+                            <td>GB/T 42063-2022</td>
+                            <td>Sharps Injury Prevention Guidance</td>
+                            <td>EN ISO 23908</td>
+                            <td>ISO 23908:2024</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Needle-Based Injection Systems</span>
+                                <span class="text-cn">基于针头的注射系统</span>
+                            </td>
+                            <td>YY/T 1768.1-2021</td>
+                            <td>Device-specific guidances</td>
+                            <td>EN ISO 11608 series</td>
+                            <td>ISO 11608:2022 series</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Labeling/Symbols</span>
+                                <span class="text-cn">标签/符号</span>
+                            </td>
+                            <td>YY/T 0466.1-2023</td>
+                            <td>21 CFR 801</td>
+                            <td>EN ISO 15223-1</td>
+                            <td>ISO 15223-1:2021</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Packaging</span>
+                                <span class="text-cn">包装</span>
+                            </td>
+                            <td>YY/T 0681 series</td>
+                            <td>FDA packaging guidances</td>
+                            <td>EN ISO 11607</td>
+                            <td>ISO 11607-1:2019</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Accelerated Aging</span>
+                                <span class="text-cn">加速老化</span>
+                            </td>
+                            <td>YY/T 0681.1-2018</td>
+                            <td>ASTM F1980 referenced</td>
+                            <td>ASTM F1980</td>
+                            <td>ASTM F1980-21</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="text-en">Shipping Testing</span>
+                                <span class="text-cn">运输测试</span>
+                            </td>
+                            <td>NMPA uses ASTM</td>
+                            <td>ASTM D4169 referenced</td>
+                            <td>EN ASTM standards</td>
+                            <td>ASTM D4169-23</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Priority Updates Tab -->
+        <div class="tab-content" id="priority">
+            <div class="section-header">
+                <h2>
+                    <span class="text-en">🚨 Priority Update Actions</span>
+                    <span class="text-cn">🚨 优先更新行动</span>
+                </h2>
+            </div>
+
+            <div class="critical-alert">
+                <h3>
+                    <span class="text-en">🔴 HIGH PRIORITY - Check for Updates</span>
+                    <span class="text-cn">🔴 高优先级 - 检查更新</span>
+                </h3>
+                <p>
+                    <span class="text-en">The following standards require immediate attention for version updates.</span>
+                    <span class="text-cn">以下标准需要立即关注版本更新。</span>
+                </p>
+            </div>
+
+            <div class="priority-item priority-high">
+                <div style="flex: 1;">
+                    <strong>ISO 11608 series</strong>
+                    <div style="font-size: 0.9rem; color: var(--gray);">
+                        <span class="text-en">Current: Mixed versions (2014, 2016, 2022) | Latest: 2022 for Parts 1-6</span>
+                        <span class="text-cn">当前: 混合版本 (2014, 2016, 2022) | 最新: 第1-6部分为2022版</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="status-current">✅ Update to 2022</span>
+                </div>
+            </div>
+
+            <div class="priority-item priority-high">
+                <div style="flex: 1;">
+                    <strong>ISO 23908</strong>
+                    <div style="font-size: 0.9rem; color: var(--gray);">
+                        <span class="text-en">Current: GB/T 42063-2022 | Latest: ISO 23908:2024</span>
+                        <span class="text-cn">当前: GB/T 42063-2022 | 最新: ISO 23908:2024</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="status-check">⚠️ Update GB to 2024</span>
+                </div>
+            </div>
+
+            <div class="priority-item priority-high">
+                <div style="flex: 1;">
+                    <strong>ISO/FDIS 10993-1:2025</strong>
+                    <div style="font-size: 0.9rem; color: var(--gray);">
+                        <span class="text-en">Status: FDIS stage | Expected: 2025</span>
+                        <span class="text-cn">状态: FDIS阶段 | 预计: 2025年</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="status-draft">🔴 Monitor FDIS</span>
+                </div>
+            </div>
+
+            <div class="priority-item priority-medium">
+                <div style="flex: 1;">
+                    <strong>YY/T 1768.1-2021</strong>
+                    <div style="font-size: 0.9rem; color: var(--gray);">
+                        <span class="text-en">Current: 2021 (ISO 11608-1:2014) | Latest: ISO 11608-1:2022</span>
+                        <span class="text-cn">当前: 2021版 (ISO 11608-1:2014) | 最新: ISO 11608-1:2022</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="status-check">⚠️ Update YY standard</span>
+                </div>
+            </div>
+
+            <div class="priority-item priority-medium">
+                <div style="flex: 1;">
+                    <strong>ASTM D4169</strong>
+                    <div style="font-size: 0.9rem; color: var(--gray);">
+                        <span class="text-en">Current: Multiple versions (2016, 2022, 2023) | Latest: 2023</span>
+                        <span class="text-cn">当前: 多个版本 (2016, 2022, 2023) | 最新: 2023版</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="status-current">✅ Use D4169-23</span>
+                </div>
+            </div>
+
+            <div class="priority-item priority-medium">
+                <div style="flex: 1;">
+                    <strong>ASTM F1980</strong>
+                    <div style="font-size: 0.9rem; color: var(--gray);">
+                        <span class="text-en">Current: 2016, 2021 | Latest: 2021</span>
+                        <span class="text-cn">当前: 2016, 2021版 | 最新: 2021版</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="status-current">✅ Use F1980-21</span>
+                </div>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem 0;">
+                <span class="text-en">📋 DRAFT STANDARDS - Monitor for Publication</span>
+                <span class="text-cn">📋 草案标准 - 监控发布</span>
+            </h3>
+
+            <div class="priority-item priority-high">
+                <div style="flex: 1;">
+                    <strong>中华人民共和国医疗器械管理法 (草案征求意见稿)</strong>
+                    <div style="font-size: 0.9rem; color: var(--gray);">
+                        <span class="text-en">Medical Device Management Law (Draft for Comments)</span>
+                        <span class="text-cn">医疗器械管理法 (草案征求意见稿)</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="status-draft">🔴 HIGH PRIORITY</span>
+                </div>
+            </div>
+
+            <div class="priority-item priority-medium">
+                <div style="flex: 1;">
+                    <strong>医疗器械人因设计技术审查指导原则 (征求意见稿第二版)</strong>
+                    <div style="font-size: 0.9rem; color: var(--gray);">
+                        <span class="text-en">Human Factors Design Technical Review Guidance (Draft 2nd Edition)</span>
+                        <span class="text-cn">人因设计技术审查指导原则 (征求意见稿第二版)</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="status-draft">📋 Monitor</span>
+                </div>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem 0;">
+                <span class="text-en">📋 Recommended Actions</span>
+                <span class="text-cn">📋 推荐行动</span>
+            </h3>
+
+            <div class="card">
+                <h4>
+                    <span class="text-en">Immediate Actions (Within 1 Month)</span>
+                    <span class="text-cn">立即行动 (1个月内)</span>
+                </h4>
+                <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                    <li>
+                        <span class="text-en">Update ISO 11608 series to 2022 versions (Parts 1-6)</span>
+                        <span class="text-cn">更新 ISO 11608 系列至2022版本 (第1-6部分)</span>
+                    </li>
+                    <li>
+                        <span class="text-en">Monitor ISO 23908:2024 publication and plan GB/T 42063 update</span>
+                        <span class="text-cn">监控 ISO 23908:2024 发布并规划 GB/T 42063 更新</span>
+                    </li>
+                    <li>
+                        <span class="text-en">Consolidate ASTM standards - keep only latest versions (D4169-23, F1980-21)</span>
+                        <span class="text-cn">整合 ASTM 标准 - 仅保留最新版本 (D4169-23, F1980-21)</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card" style="margin-top: 1rem;">
+                <h4>
+                    <span class="text-en">Short-term Actions (Within 3 Months)</span>
+                    <span class="text-cn">短期行动 (3个月内)</span>
+                </h4>
+                <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                    <li>
+                        <span class="text-en">Monitor ISO/FDIS 10993-1:2025 progress and prepare for update</span>
+                        <span class="text-cn">监控 ISO/FDIS 10993-1:2025 进度并准备更新</span>
+                    </li>
+                    <li>
+                        <span class="text-en">Update superseded standards (YY/T 0316 → GB/T 42062-2022, YY/T 0287 → GB/T 42061-2022)</span>
+                        <span class="text-cn">更新已废止标准 (YY/T 0316 → GB/T 42062-2022, YY/T 0287 → GB/T 42061-2022)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>
+            <span class="text-en">Summed Medtech Regulatory Standards Tracking Matrix</span>
+            <span class="text-cn">森迈医疗科技法规标准跟踪矩阵</span>
+        </p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+            <span class="text-en">Generated: 2025-12-24 | Auto-Injector & Pen-Injector Focus</span>
+            <span class="text-cn">生成日期: 2025-12-24 | 自动注射器与笔式注射器重点</span>
+        </p>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.7;">
+            <span class="text-en">Repository: /Volumes/森迈医疗科技/05法规注册部/01内部公开/01 法律法规/</span>
+            <span class="text-cn">存储位置: /Volumes/森迈医疗科技/05法规注册部/01内部公开/01 法律法规/</span>
+        </p>
+    </footer>
+
+    <script>
+        // Language Toggle
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const body = document.body;
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                body.className = lang === 'cn' ? 'lang-cn' : 'lang-en';
+
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Save preference
+                localStorage.setItem('preferredLang', lang);
+            });
+        });
+
+        // Load saved language preference
+        const savedLang = localStorage.getItem('preferredLang');
+        if (savedLang) {
+            body.className = savedLang === 'cn' ? 'lang-cn' : 'lang-en';
+            langBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === savedLang);
+            });
+        }
+
+        // Tab Navigation
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+
+                // Remove active from all tabs
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                // Add active to clicked tab
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+
+                // Scroll to top of tab content
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Save preference
+                localStorage.setItem('preferredTab', tabId);
+            });
+        });
+
+        // Load saved tab preference
+        const savedTab = localStorage.getItem('preferredTab');
+        if (savedTab) {
+            const targetTab = document.querySelector(`[data-tab="${savedTab}"]`);
+            const targetContent = document.getElementById(savedTab);
+
+            if (targetTab && targetContent) {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                targetTab.classList.add('active');
+                targetContent.classList.add('active');
+            }
+        }
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const activeTabContent = document.querySelector('.tab-content.active');
+
+            if (!activeTabContent) return;
+
+            const rows = activeTabContent.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Expandable Sections
+        function toggleExpandable(header) {
+            const expandable = header.parentElement;
+            expandable.classList.toggle('open');
+        }
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + K for search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+
+            // Ctrl/Cmd + 1-9 for tabs
+            if ((e.ctrlKey || e.metaKey) && e.key >= '1' && e.key <= '9') {
+                e.preventDefault();
+                const tabIndex = parseInt(e.key) - 1;
+                const tabBtn = tabBtns[tabIndex];
+                if (tabBtn) {
+                    tabBtn.click();
+                }
+            }
+        });
+
+        // Print functionality
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + P for print
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                // Add print class to body
+                body.classList.add('printing');
+            }
+        });
+
+        // Remove print class after printing
+        window.addEventListener('afterprint', () => {
+            body.classList.remove('printing');
+        });
+    </script>
+</body>
+</html>

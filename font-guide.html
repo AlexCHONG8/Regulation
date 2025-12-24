@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Installation Guide | 字体安装指南</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .font-showcase {
+            font-size: 2rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            background: white;
+        }
+
+        .font-sample {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+        }
+
+        .font-sample h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .font-sample p {
+            margin: 0.5rem 0;
+        }
+
+        .install-step {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: var(--radius-md);
+            align-items: flex-start;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .os-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .os-tab {
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: var(--radius-round);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .os-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .os-content {
+            display: none;
+        }
+
+        .os-content.active {
+            display: block;
+        }
+
+        code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+        }
+
+        .download-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            margin: 0.5rem;
+            transition: background var(--transition-normal);
+        }
+
+        .download-link:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body class="lang-en">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div>
+                    <h1>
+                        <span class="text-en">Font Installation Guide</span>
+                        <span class="text-cn">字体安装指南</span>
+                    </h1>
+                    <p>
+                        <span class="text-en">Summed Medtech Regulatory Tracker</span>
+                        <span class="text-cn">森迈医疗科技法规标准跟踪系统</span>
+                    </p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div class="lang-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="cn">中文</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Language Toggle Script -->
+        <script>
+            const langBtns = document.querySelectorAll('.lang-btn');
+            const body = document.body;
+
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.getAttribute('data-lang');
+                    body.className = lang === 'cn' ? 'lang-cn' : 'lang-en';
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+        </script>
+
+        <!-- Overview -->
+        <div class="section-header">
+            <h2>
+                <span class="text-en">📝 Recommended Fonts for Optimal Display</span>
+                <span class="text-cn">📝 推荐字体以获得最佳显示效果</span>
+            </h2>
+        </div>
+
+        <div class="card">
+            <h3>
+                <span class="text-en">Why Install These Fonts?</span>
+                <span class="text-cn">为什么要安装这些字体?</span>
+            </h3>
+            <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                <li>
+                    <span class="text-en"><strong>Professional appearance:</strong> Ensures documents display correctly across all devices</span>
+                    <span class="text-cn"><strong>专业外观:</strong> 确保文档在所有设备上正确显示</span>
+                </li>
+                <li>
+                    <span class="text-en"><strong>Bilingual support:</strong> Proper rendering of English and Chinese characters</span>
+                    <span class="text-cn"><strong>双语支持:</strong> 正确渲染英文和中文字符</span>
+                </li>
+                <li>
+                    <span class="text-en"><strong>Consistency:</strong> Same visual appearance for team members sharing documents</span>
+                    <span class="text-cn"><strong>一致性:</strong> 团队成员共享文档时具有相同的视觉效果</span>
+                </li>
+                <li>
+                    <span class="text-en"><strong>Readability:</strong> Optimized fonts for long-term reading of technical documents</span>
+                    <span class="text-cn"><strong>可读性:</strong> 针对技术文档长期阅读优化的字体</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Font Showcase -->
+        <div class="section-header">
+            <h3>
+                <span class="text-en">🎨 Font Showcase</span>
+                <span class="text-cn">🎨 字体展示</span>
+            </h3>
+        </div>
+
+        <div class="font-sample">
+            <h3>
+                <span class="text-en">System Font Stack (Default)</span>
+                <span class="text-cn">系统字体堆栈 (默认)</span>
+            </h3>
+            <p class="font-showcase" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;">
+                <span class="text-en">The quick brown fox jumps over the lazy dog</span>
+                <span class="text-cn">天地玄黄，宇宙洪荒。日月盈昃，辰宿列张。</span>
+            </p>
+            <p>
+                <span class="text-en">This font stack automatically selects the best available font on your system:</span>
+                <span class="text-cn">此字体堆栈会自动选择您系统上可用的最佳字体:</span>
+            </p>
+            <ul>
+                <li><strong>San Francisco</strong> - macOS/iOS (Apple)</li>
+                <li><strong>Segoe UI</strong> - Windows 10/11 (Microsoft)</li>
+                <li><strong>PingFang SC</strong> - macOS Chinese (苹方)</li>
+                <li><strong>Microsoft YaHei</strong> - Windows Chinese (微软雅黑)</li>
+            </ul>
+        </div>
+
+        <!-- Font Recommendations -->
+        <div class="section-header">
+            <h3>
+                <span class="text-en">📚 Recommended Fonts to Install</span>
+                <span class="text-cn">📚 推荐安装的字体</span>
+            </h3>
+        </div>
+
+        <div class="card-grid">
+            <!-- Chinese Fonts -->
+            <div class="card">
+                <h4>
+                    <span class="text-en">🇨🇳 Chinese Fonts</span>
+                    <span class="text-cn">🇨🇳 中文字体</span>
+                </h4>
+                <div class="font-sample" style="font-size: 1.2rem; padding: 1rem;">
+                    <p style="font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;">
+                        天地玄黄，宇宙洪荒<br>
+                        PingFang SC / 微软雅黑
+                    </p>
+                </div>
+                <p><strong>Platform:</strong> macOS / Windows</p>
+                <p><strong>Usage:</strong> <span class="text-en">Primary Chinese font</span><span class="text-cn">主要中文字体</span></p>
+            </div>
+
+            <!-- Professional Fonts -->
+            <div class="card">
+                <h4>
+                    <span class="text-en">🔤 Professional English Fonts</span>
+                    <span class="text-cn">🔤 专业英文字体</span>
+                </h4>
+                <div class="font-sample" style="font-size: 1.2rem; padding: 1rem;">
+                    <p style="font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                        ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+                        abcdefghijklmnopqrstuvwxyz<br>
+                        0123456789
+                    </p>
+                </div>
+                <p><strong>Platform:</strong> Cross-platform</p>
+                <p><strong>Usage:</strong> <span class="text-en">Primary English font</span><span class="text-cn">主要英文字体</span></p>
+            </div>
+
+            <!-- Monospace Fonts -->
+            <div class="card">
+                <h4>
+                    <span class="text-en">💻 Monospace (Code)</span>
+                    <span class="text-cn">💻 等宽字体 (代码)</span>
+                </h4>
+                <div class="font-sample" style="font-size: 1.2rem; padding: 1rem;">
+                    <p style="font-family: 'Monaco', 'Menlo', 'Consolas', monospace;">
+                        function example() {<br>
+                        &nbsp;&nbsp;return "code";<br>
+                        }
+                    </p>
+                </div>
+                <p><strong>Platform:</strong> Cross-platform</p>
+                <p><strong>Usage:</strong> <span class="text-en">Technical data, codes</span><span class="text-cn">技术数据、代码</span></p>
+            </div>
+        </div>
+
+        <!-- Installation Instructions -->
+        <div class="section-header">
+            <h3>
+                <span class="text-en">🛠️ Installation Instructions</span>
+                <span class="text-cn">🛠️ 安装说明</span>
+            </h3>
+        </div>
+
+        <!-- OS Selection Tabs -->
+        <div class="os-tabs">
+            <button class="os-tab active" data-os="macos">
+                <span class="text-en">🍎 macOS</span>
+                <span class="text-cn">🍎 macOS</span>
+            </button>
+            <button class="os-tab" data-os="windows">
+                <span class="text-en">🪟 Windows</span>
+                <span class="text-cn">🪟 Windows</span>
+            </button>
+            <button class="os-tab" data-os="linux">
+                <span class="text-en">🐧 Linux</span>
+                <span class="text-cn">🐧 Linux</span>
+            </button>
+        </div>
+
+        <!-- macOS Instructions -->
+        <div class="os-content active" id="macos">
+            <div class="install-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Download Font Files</span>
+                        <span class="text-cn">下载字体文件</span>
+                    </h4>
+                    <p>
+                        <span class="text-en">Download font files (.ttf or .otf format) from trusted sources</span>
+                        <span class="text-cn">从可信来源下载字体文件(.ttf或.otf格式)</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="install-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Open Font Book</span>
+                        <span class="text-cn">打开"字体册"应用</span>
+                    </h4>
+                    <p>
+                        <span class="text-en">Go to <strong>Applications → Font Book</strong></span>
+                        <span class="text-cn">前往 <strong>应用程序 → 字体册</strong></span>
+                    </p>
+                    <p><code>/Applications/Font Book.app</code></p>
+                </div>
+            </div>
+
+            <div class="install-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Install Fonts</span>
+                        <span class="text-cn">安装字体</span>
+                    </h4>
+                    <p>
+                        <span class="text-en">Double-click the font file and click <strong>"Install Font"</strong></span>
+                        <span class="text-cn">双击字体文件,然后点击 <strong>"安装字体"</strong></span>
+                    </p>
+                    <p>
+                        <span class="text-en">Or drag font files into Font Book window</span>
+                        <span class="text-cn">或将字体文件拖入字体册窗口</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="install-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Verify Installation</span>
+                        <span class="text-cn">验证安装</span>
+                    </h4>
+                    <p>
+                        <span class="text-en">Fonts appear in Font Book and are available in all applications</span>
+                        <span class="text-cn">字体将出现在字体册中,并可在所有应用中使用</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Windows Instructions -->
+        <div class="os-content" id="windows">
+            <div class="install-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Download Font Files</span>
+                        <span class="text-cn">下载字体文件</span>
+                    </h4>
+                    <p>
+                        <span class="text-en">Download font files (.ttf or .otf format)</span>
+                        <span class="text-cn">下载字体文件(.ttf或.otf格式)</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="install-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Extract Files (if zipped)</span>
+                        <span class="text-cn">解压文件 (如果是压缩包)</span>
+                    </h4>
+                    <p>
+                        <span class="text-en">Right-click → <strong>"Extract All"</strong></span>
+                        <span class="text-cn">右键点击 → <strong>"全部解压"</strong></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="install-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Open Font Folder</span>
+                        <span class="text-cn">打开字体文件夹</span>
+                    </h4>
+                    <p>
+                        <span class="text-en">Go to: <code>C:\Windows\Fonts</code></span>
+                        <span class="text-cn">前往: <code>C:\Windows\Fonts</code></span>
+                    </p>
+                    <p>
+                        <span class="text-en">Or: <strong>Settings → Personalization → Fonts</strong></span>
+                        <span class="text-cn">或: <strong>设置 → 个性化 → 字体</strong></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="install-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Install Fonts</span>
+                        <span class="text-cn">安装字体</span>
+                    </h4>
+                    <p>
+                        <span class="text-en">Right-click font file → <strong>"Install"</strong> or <strong>"Install for All Users"</strong></span>
+                        <span class="text-cn">右键点击字体文件 → <strong>"安装"</strong> 或 <strong>"为所有用户安装"</strong></span>
+                    </p>
+                    <p>
+                        <span class="text-en">Or drag and drop into Fonts folder</span>
+                        <span class="text-cn">或拖放到字体文件夹中</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Linux Instructions -->
+        <div class="os-content" id="linux">
+            <div class="install-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Download Font Files</span>
+                        <span class="text-cn">下载字体文件</span>
+                    </h4>
+                    <p>
+                        <span class="text-en">Download font files (.ttf or .otf format)</span>
+                        <span class="text-cn">下载字体文件(.ttf或.otf格式)</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="install-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Create Fonts Directory (if needed)</span>
+                        <span class="text-cn">创建字体目录 (如果需要)</span>
+                    </h4>
+                    <p><code>mkdir -p ~/.local/share/fonts</code></p>
+                    <p>
+                        <span class="text-en">Or for system-wide: <code>/usr/share/fonts</code></span>
+                        <span class="text-cn">或全系统安装: <code>/usr/share/fonts</code></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="install-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Copy Font Files</span>
+                        <span class="text-cn">复制字体文件</span>
+                    </h4>
+                    <p><code>cp *.ttf ~/.local/share/fonts/</code></p>
+                </div>
+            </div>
+
+            <div class="install-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>
+                        <span class="text-en">Update Font Cache</span>
+                        <span class="text-cn">更新字体缓存</span>
+                    </h4>
+                    <p><code>fc-cache -f -v</code></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- OS Tab Script -->
+        <script>
+            const osTabs = document.querySelectorAll('.os-tab');
+            const osContents = document.querySelectorAll('.os-content');
+
+            osTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const os = tab.getAttribute('data-os');
+
+                    osTabs.forEach(t => t.classList.remove('active'));
+                    osContents.forEach(c => c.classList.remove('active'));
+
+                    tab.classList.add('active');
+                    document.getElementById(os).classList.add('active');
+                });
+            });
+        </script>
+
+        <!-- Font Sources -->
+        <div class="section-header">
+            <h3>
+                <span class="text-en">🔗 Trusted Font Sources</span>
+                <span class="text-cn">🔗 可信字体来源</span>
+            </h3>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <h4>
+                    <span class="text-en">🍎 Apple Fonts</span>
+                    <span class="text-cn">🍎 Apple 字体</span>
+                </h4>
+                <p>
+                    <span class="text-en">Included with macOS and iOS</span>
+                    <span class="text-cn">随 macOS 和 iOS 提供</span>
+                </p>
+                <p>
+                    <span class="text-en">SF Pro, SF Display, PingFang SC</span>
+                    <span class="text-cn">SF Pro、SF Display、苹方</span>
+                </p>
+            </div>
+
+            <div class="card">
+                <h4>
+                    <span class="text-en">🪟 Microsoft Fonts</span>
+                    <span class="text-cn">🪟 Microsoft 字体</span>
+                </h4>
+                <p>
+                    <span class="text-en">Included with Windows 10/11</span>
+                    <span class="text-cn">随 Windows 10/11 提供</span>
+                </p>
+                <p>
+                    <span class="text-en">Segoe UI, Microsoft YaHei</span>
+                    <span class="text-cn">Segoe UI、微软雅黑</span>
+                </p>
+            </div>
+
+            <div class="card">
+                <h4>
+                    <span class="text-en">🌐 Google Fonts</span>
+                    <span class="text-cn">🌐 Google 字体</span>
+                </h4>
+                <p>
+                    <span class="text-en">Free, open-source fonts</span>
+                    <span class="text-cn">免费开源字体</span>
+                </p>
+                <a href="https://fonts.google.com/" target="_blank" class="download-link">Visit Google Fonts</a>
+            </div>
+
+            <div class="card">
+                <h4>
+                    <span class="text-en">🏛️ Adobe Fonts</span>
+                    <span class="text-cn">🏛️ Adobe 字体</span>
+                </h4>
+                <p>
+                    <span class="text-en">Professional fonts (subscription)</span>
+                    <span class="text-cn">专业字体 (订阅)</span>
+                </p>
+                <a href="https://fonts.adobe.com/" target="_blank" class="download-link">Visit Adobe Fonts</a>
+            </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="section-header">
+            <h3>
+                <span class="text-en">🔧 Troubleshooting</span>
+                <span class="text-cn">🔧 故障排除</span>
+            </h3>
+        </div>
+
+        <div class="card">
+            <h4>
+                <span class="text-en">Fonts Not Displaying Correctly?</span>
+                <span class="text-cn">字体显示不正确?</span>
+            </h4>
+
+            <div style="margin-top: 1rem;">
+                <p><strong>
+                    <span class="text-en">1. Clear Browser Cache</span>
+                    <span class="text-cn">1. 清除浏览器缓存</span>
+                </strong></p>
+                <p>
+                    <span class="text-en">Press <code>Ctrl+Shift+Delete</code> (Windows) or <code>Cmd+Shift+Delete</code> (macOS)</span>
+                    <span class="text-cn">按 <code>Ctrl+Shift+Delete</code> (Windows) 或 <code>Cmd+Shift+Delete</code> (macOS)</span>
+                </p>
+            </div>
+
+            <div style="margin-top: 1rem;">
+                <p><strong>
+                    <span class="text-en">2. Restart Browser</span>
+                    <span class="text-cn">2. 重启浏览器</span>
+                </strong></p>
+                <p>
+                    <span class="text-en">Close and reopen your browser after installing fonts</span>
+                    <span class="text-cn">安装字体后关闭并重新打开浏览器</span>
+                </p>
+            </div>
+
+            <div style="margin-top: 1rem;">
+                <p><strong>
+                    <span class="text-en">3. Verify Installation</span>
+                    <span class="text-cn">3. 验证安装</span>
+                </strong></p>
+                <p>
+                    <span class="text-en">Open Font Book (macOS) or Fonts settings (Windows) to confirm installation</span>
+                    <span class="text-cn">打开字体册 (macOS) 或字体设置 (Windows) 确认安装</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Back Link -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html" class="download-link">
+                <span class="text-en">← Back to Regulatory Tracker</span>
+                <span class="text-cn">← 返回法规标准跟踪系统</span>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>
+            <span class="text-en">Summed Medtech Font Installation Guide</span>
+            <span class="text-cn">森迈医疗科技字体安装指南</span>
+        </p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+            <span class="text-en">Generated: 2025-12-24</span>
+            <span class="text-cn">生成日期: 2025-12-24</span>
+        </p>
+    </footer>
+
+</body>
+</html>
