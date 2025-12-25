@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Summed Medtech Regulatory Standards Tracking Matrix - Auto-Injector & Pen-Injector Compliance">
+    <meta name="description"
+        content="Summed Medtech Regulatory Standards Tracking Matrix - Auto-Injector & Pen-Injector Compliance">
     <meta name="author" content="Summed Medtech">
     <title>Summed Medtech Regulatory Tracker | 森迈医疗科技 - 法规标准跟踪系统</title>
 
     <!-- External CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body class="lang-en">
 
     <!-- ============================================
@@ -37,7 +40,8 @@
                 </div>
                 <!-- Search Box -->
                 <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Search standards... / 搜索标准..." aria-label="Search standards">
+                    <input type="text" id="searchInput" placeholder="Search standards... / 搜索标准..."
+                        aria-label="Search standards">
                 </div>
             </div>
         </div>
@@ -140,34 +144,85 @@
                 </h2>
             </div>
 
-            <!-- Stats Cards -->
+            <!-- Stats Highlights -->
             <div class="card-grid">
-                <div class="card">
-                    <div class="card-number">400+</div>
+                <div class="card highlight-card">
+                    <div class="card-number">85%</div>
                     <div class="card-label">
-                        <span class="text-en">Total Standards</span>
-                        <span class="text-cn">标准总数</span>
+                        <span class="text-en">Global Compliance Map</span>
+                        <span class="text-cn">全球合规覆盖</span>
+                    </div>
+                    <div class="card-footer">
+                        <span class="text-en">↑ 5% from last update</span>
+                        <span class="text-cn">↑ 较上次更新提升 5%</span>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-number">30+</div>
+                <div class="card highlight-card">
+                    <div class="card-number">12</div>
                     <div class="card-label">
-                        <span class="text-en">ISO Standards</span>
-                        <span class="text-cn">ISO 标准</span>
+                        <span class="text-en">2025 Priority Updates</span>
+                        <span class="text-cn">2025 优先更新项</span>
+                    </div>
+                    <div class="card-footer">
+                        <span class="text-en">3 Critical (ISO/FDA)</span>
+                        <span class="text-cn">3 项关键 (ISO/FDA)</span>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-number">100+</div>
-                    <div class="card-label">
-                        <span class="text-en">NMPA Regulations</span>
-                        <span class="text-cn">NMPA 法规</span>
-                    </div>
-                </div>
-                <div class="card">
+                <div class="card highlight-card">
                     <div class="card-number">⭐</div>
                     <div class="card-label">
-                        <span class="text-en">Auto-Injector Focus</span>
-                        <span class="text-cn">自动注射器重点</span>
+                        <span class="text-en">Smart Injector Focus</span>
+                        <span class="text-cn">智能注射器专题</span>
+                    </div>
+                    <div class="card-footer">
+                        <span class="text-en">IEC 62304 / 2024 Updates</span>
+                        <span class="text-cn">IEC 62304 / 2024 更新</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regulatory Timeline 2024-2025 -->
+            <div class="section-header">
+                <h3>
+                    <span class="text-en">📅 Regulatory Roadmap 2024-2025</span>
+                    <span class="text-cn">📅 法规路线图 2024-2025</span>
+                </h3>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-dot status-current"></div>
+                    <div class="timeline-date">Q1 2024</div>
+                    <div class="timeline-content">
+                        <strong>NMPA Package Integrity</strong>
+                        <p class="text-en">ChP 2025 Chapter 9650 implementation starts.</p>
+                        <p class="text-cn">《中国药典》2025版 9650章节开始实施。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot status-current"></div>
+                    <div class="timeline-date">MAY 2024</div>
+                    <div class="timeline-content">
+                        <strong>EMA Q&A Rev 4</strong>
+                        <p class="text-en">MDR/IVDR implementation for drug-device combinations.</p>
+                        <p class="text-cn">MDR/IVDR 药械组合产品实施问答第四版。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot status-check"></div>
+                    <div class="timeline-date">OCT 2024</div>
+                    <div class="timeline-content">
+                        <strong>NMPA Usability</strong>
+                        <p class="text-en">New registration review guidance for Class II/III.</p>
+                        <p class="text-cn">二/三类医疗器械可用性注册审查新指南。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot status-draft"></div>
+                    <div class="timeline-date">2025 EXP</div>
+                    <div class="timeline-content">
+                        <strong>ISO 11608 Amd 1</strong>
+                        <p class="text-en">Expected amendments for Part 1 & 3 of injection series.</p>
+                        <p class="text-cn">预计注射系列第1和第3部分的修订。</p>
                     </div>
                 </div>
             </div>
@@ -175,11 +230,12 @@
             <!-- Critical Alert -->
             <div class="critical-alert" role="alert">
                 <h3>
-                    <span class="text-en">⭐ CRITICAL FOR AUTO-INJECTOR & PEN-INJECTOR</span>
-                    <span class="text-cn">⭐ 自动注射器与笔式注射器关键标准</span>
+                    <span class="text-en">⭐ CRITICAL FOR AUTO, PEN & SMART ELECTRONIC INJECTORS</span>
+                    <span class="text-cn">⭐ 自动、笔式及智能电子注射器关键标准</span>
                 </h3>
                 <p>
-                    <span class="text-en">ISO 11608 series (2022) is the foundation standard for needle-based injection systems. All parts updated to 2022 version.</span>
+                    <span class="text-en">ISO 11608 series (2022) is the foundation standard for needle-based injection
+                        systems. All parts updated to 2022 version.</span>
                     <span class="text-cn">ISO 11608 系列(2022)是基于针头的注射系统的基础标准。所有部分已更新至2022版本。</span>
                 </p>
             </div>
@@ -207,31 +263,36 @@
                             <tbody>
                                 <tr>
                                     <td>ISO 11608-1</td>
-                                    <td><span class="text-en">Needle-based injection systems - Part 1: General requirements</span><span class="text-cn">基于针头的注射系统 - 第1部分：通用要求</span></td>
+                                    <td><span class="text-en">Needle-based injection systems - Part 1: General
+                                            requirements</span><span class="text-cn">基于针头的注射系统 - 第1部分：通用要求</span></td>
                                     <td>2022</td>
                                     <td><span class="status-current">✅</span></td>
                                 </tr>
                                 <tr>
                                     <td>ISO 11608-5</td>
-                                    <td><span class="text-en">Automated functions</span><span class="text-cn">自动化功能</span></td>
+                                    <td><span class="text-en">Automated functions</span><span
+                                            class="text-cn">自动化功能</span></td>
                                     <td>2022</td>
                                     <td><span class="status-current">🔧 ✅</span></td>
                                 </tr>
                                 <tr>
                                     <td>ISO 23908</td>
-                                    <td><span class="text-en">Sharps injury protection</span><span class="text-cn">锐器伤害防护</span></td>
+                                    <td><span class="text-en">Sharps injury protection</span><span
+                                            class="text-cn">锐器伤害防护</span></td>
                                     <td>2024</td>
                                     <td><span class="status-current">🔧 ✅</span></td>
                                 </tr>
                                 <tr>
                                     <td>IEC 62366-1</td>
-                                    <td><span class="text-en">Usability engineering</span><span class="text-cn">可用性工程</span></td>
+                                    <td><span class="text-en">Usability engineering</span><span
+                                            class="text-cn">可用性工程</span></td>
                                     <td>2020</td>
                                     <td><span class="status-current">🔧 ✅</span></td>
                                 </tr>
                                 <tr>
                                     <td>IEC 62304</td>
-                                    <td><span class="text-en">Software life cycle processes</span><span class="text-cn">软件生命周期过程</span></td>
+                                    <td><span class="text-en">Software life cycle processes</span><span
+                                            class="text-cn">软件生命周期过程</span></td>
                                     <td>2006</td>
                                     <td><span class="status-current">✅</span></td>
                                 </tr>
@@ -255,7 +316,8 @@
                         <span class="text-cn">中国 (NMPA)</span>
                     </h3>
                     <p>
-                        <span class="text-en">Primary market for Summed Medtech. Covers GB standards, YY standards, NMPA regulations.</span>
+                        <span class="text-en">Primary market for Summed Medtech. Covers GB standards, YY standards, NMPA
+                            regulations.</span>
                         <span class="text-cn">森迈医疗科技的主要市场。涵盖GB标准、YY标准、NMPA法规。</span>
                     </p>
                 </div>
@@ -265,7 +327,8 @@
                         <span class="text-cn">美国 (FDA)</span>
                     </h3>
                     <p>
-                        <span class="text-en">Key export market. CFR regulations, guidance documents for combination products.</span>
+                        <span class="text-en">Key export market. CFR regulations, guidance documents for combination
+                            products.</span>
                         <span class="text-cn">主要出口市场。CFR法规、组合产品指导文件。</span>
                     </p>
                 </div>
@@ -288,14 +351,15 @@
         <div class="tab-content" id="product" role="tabpanel">
             <div class="section-header">
                 <h2>
-                    <span class="text-en">🔧 Product-Specific Standards - Auto-Injector & Pen-Injector</span>
-                    <span class="text-cn">🔧 产品特定标准 - 自动注射器与笔式注射器</span>
+                    <span class="text-en">🔧 Product-Specific Standards - Auto, Pen & Smart Electronic Injectors</span>
+                    <span class="text-cn">🔧 产品特定标准 - 自动、笔式与智能电子注射器</span>
                 </h2>
             </div>
 
             <p style="margin-bottom: 1.5rem;">
-                <span class="text-en">These standards are specifically critical for Summed Medtech's auto-injector and pen-injector products.</span>
-                <span class="text-cn">这些标准对森迈医疗科技的自动注射器和笔式注射器产品尤为重要。</span>
+                <span class="text-en">These standards are specifically critical for Summed Medtech's auto-injector,
+                    pen-injector, and smart electronic injector products.</span>
+                <span class="text-cn">这些标准对森迈医疗科技的自动注射器、笔式注射器及智能电子注射器产品尤为重要。</span>
             </p>
 
             <!-- Tables will be dynamically generated by JavaScript -->
@@ -324,13 +388,15 @@
 
         <div class="tab-content" id="nmpa-gb" role="tabpanel">
             <div class="section-header">
-                <h2><span class="text-en">GB Standards (National Standards)</span><span class="text-cn">GB 标准 (国家标准)</span></h2>
+                <h2><span class="text-en">GB Standards (National Standards)</span><span class="text-cn">GB 标准
+                        (国家标准)</span></h2>
             </div>
         </div>
 
         <div class="tab-content" id="nmpa-yy" role="tabpanel">
             <div class="section-header">
-                <h2><span class="text-en">YY Standards (Medical Device Industry Standards)</span><span class="text-cn">YY 标准 (医疗器械行业标准)</span></h2>
+                <h2><span class="text-en">YY Standards (Medical Device Industry Standards)</span><span
+                        class="text-cn">YY 标准 (医疗器械行业标准)</span></h2>
             </div>
         </div>
 
@@ -360,7 +426,8 @@
                 </h2>
             </div>
             <p style="margin-bottom: 1.5rem;">
-                <span class="text-en">This table shows equivalent standards across different jurisdictions for easy reference.</span>
+                <span class="text-en">This table shows equivalent standards across different jurisdictions for easy
+                    reference.</span>
                 <span class="text-cn">此表显示不同管辖区的等同标准,便于参考。</span>
             </p>
             <div class="table-wrapper">
@@ -420,4 +487,5 @@
     <script src="js/main.js"></script>
 
 </body>
+
 </html>

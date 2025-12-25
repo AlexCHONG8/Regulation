@@ -136,7 +136,7 @@ const STANDARDS_DATA = {
             status: "current",
             relevance: "Sharps safety",
             criticality: "⭐⭐⭐",
-            url: "https://www.iso.org/",
+            url: "https://www.iso.org/standard/83615.html",
             subsection: "sharps"
         },
         {
@@ -160,7 +160,7 @@ const STANDARDS_DATA = {
             status: "current",
             relevance: "Sharps safety",
             criticality: "⭐⭐⭐",
-            url: "https://www.fda.gov/",
+            url: "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/medical-devices-sharps-injury-prevention-features",
             subsection: "sharps"
         },
         // Human Factors
@@ -334,9 +334,9 @@ const STANDARDS_DATA = {
             code: "ISO 10993-1",
             title_en: "Biological evaluation - Part 1: Evaluation and testing",
             title_cn: "生物学评价 - 第1部分：评价与试验",
-            version: "2009",
-            status: "check",
-            relevance: "Check for 2024 update",
+            version: "2018",
+            status: "current",
+            relevance: "Biocompatibility",
             url: "https://www.iso.org/standard/64960.html"
         },
         {
@@ -540,7 +540,17 @@ const STANDARDS_DATA = {
             status: "current",
             relevance: "Sharps safety",
             criticality: "🔧 CRITICAL",
-            url: "https://www.fda.gov/"
+            url: "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/medical-devices-sharps-injury-prevention-features"
+        },
+        {
+            id: "F012",
+            code: "FDA Emergency-Use Injectors",
+            title_en: "Technical Considerations for Demonstrating Reliability of Emergency-Use Injectors",
+            title_cn: "紧急使用注射器可靠性验证的技术考虑",
+            version: "2020 (Draft)",
+            status: "current",
+            relevance: "Reliability (5-Nines)",
+            url: "https://www.fda.gov/media/137107/download"
         }
     ],
 
@@ -798,8 +808,19 @@ const STANDARDS_DATA = {
             title_cn: "MDR修正案",
             version: "2021",
             status: "current",
-            relevance: "MDR update",
-            url: "https://eur-lex.europa.eu/"
+            relevance: "MDR updates",
+            url: "https://eur-lex.europa.eu/eli/reg/2021/2226/oj"
+        },
+        {
+            id: "E_EMA_001",
+            code: "EMA Q&A DDC",
+            title_en: "Questions and answers on the implementation of the MDR and IVDR to drug-device combinations",
+            title_cn: "关于MDR和IVDR在药械组合产品中实施的问答",
+            version: "2024 (Rev 4)",
+            status: "current",
+            relevance: "Combination Products",
+            criticality: "🔧 CRITICAL",
+            url: "https://www.ema.europa.eu/en/documents/other/questions-answers-implementation-medical-devices-amendment-regulations-in-vitro-diagnostic-medical-devices-regulations-drug-device-combinations_en.pdf"
         },
         {
             id: "E004",
@@ -1026,8 +1047,8 @@ const CROSS_REFERENCE_DATA = [
         topic_en: "Sharps Protection",
         topic_cn: "锐器防护",
         nmpa: "GB/T 42063-2022",
-        fda: "Sharps Injury Prevention Guidance",
-        eu: "EN ISO 23908",
+        fda: "FDA Sharps Guidance (2024)",
+        eu: "EN ISO 23908:2024",
         iso: "ISO 23908:2024"
     },
     {
@@ -1086,8 +1107,8 @@ const PRIORITY_UPDATES = {
             code: "ISO 23908",
             current: "GB/T 42063-2022",
             latest: "ISO 23908:2024",
-            action: "Update GB to 2024",
-            status: "check"
+            action: "Update GB/YY to 2024",
+            status: "current"
         },
         {
             code: "ISO/FDIS 10993-1:2025",
@@ -1122,20 +1143,25 @@ const PRIORITY_UPDATES = {
     ],
     draft: [
         {
-            code: "中华人民共和国医疗器械管理法 (草案征求意见稿)",
-            current_en: "Medical Device Management Law (Draft for Comments)",
-            current_cn: "医疗器械管理法 (草案征求意见稿)",
-            expected: "TBD",
-            action: "HIGH PRIORITY",
-            status: "draft"
+            id: "PRIO001",
+            code: "NMPA Usability",
+            title_en: "Usability engineering registration review guidance",
+            title_cn: "医疗器械可用性工程注册审查指导原则",
+            version: "2024",
+            status: "current",
+            relevance: "NMPA Compliance",
+            criticality: "🔧 CRITICAL",
+            url: "https://www.cmde.org.cn/"
         },
         {
-            code: "医疗器械人因设计技术审查指导原则 (征求意见稿第二版)",
-            current_en: "Human Factors Design Technical Review Guidance (Draft 2nd Edition)",
-            current_cn: "人因设计技术审查指导原则 (征求意见稿第二版)",
-            expected: "2025?",
-            action: "Monitor",
-            status: "draft"
+            id: "PRIO002",
+            code: "ChP Chapter 9650",
+            title_en: "Pharmaceutical Package Integrity Research Guidelines",
+            title_cn: "药品包装系统密封性研究指导原则",
+            version: "ChP 2025",
+            status: "current",
+            relevance: "Package Integrity",
+            url: "https://www.chp.org.cn/"
         }
     ]
 };
